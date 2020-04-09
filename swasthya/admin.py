@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import account
-# Register your models here.
+from .models import Doctor,Patient
 
-admin.site.register(account)
+admin.site.register(Doctor)
+admin.site.register(Patient)
+

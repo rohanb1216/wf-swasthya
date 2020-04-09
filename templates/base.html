@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport">
+    <title>Swasthya</title>
+    
+  </head>
+  <body>
+   
+
+          <div>
+           
+              {% if user.is_authenticated %}
+              <p> Logged in as {{ user.username }}
+              {% else %}
+              <a href="{% url 'login' %}" class="btn btn-light" role="button">Log in</a><br>
+              <a href="{% url 'signup' %}" class="btn btn-primary" role="button">Sign up</a><br>
+              {% endif %}
+              <a href="{% url 'logout' %}">Log out</a>
+              </p>
+              <br>
+			        {% block content %}
+              {% endblock %}
+          
+          </div>
+       
+       
+  
+    
+  </body>
+</html>
