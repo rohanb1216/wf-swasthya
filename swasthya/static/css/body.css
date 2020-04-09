@@ -1,0 +1,87 @@
+body, html {
+  height: 100%;
+  padding:0px;
+}
+* {
+  box-sizing: border-box;
+}
+.body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background-color: lightblue;
+}
+
+.boxed {
+  border: 5px solid darkblue;
+  padding: 20px;
+  background-color: #B0E0E6;
+
+}
+
+.parallax {
+  /* The image used */
+  background-image: url('../images/wallpaper_patient1.jpg');
+
+  /* Full height */
+  height: 100%;
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Column container */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Create two unequal columns that sits next to each other */
+/* Sidebar/left column */
+.side {
+
+  background-color:#000000;
+  flex:20%;
+}
+
+/* Main column */
+.main {
+  flex: 70%;
+  background-color: white;
+  padding: 10px;
+}
+/* Fake image, just for this example */
+.fakeimg {
+  background-color: #aaa;
+  width: 100%;
+  padding: 20px;
+}
+
+
+.sidenav {
+
+  height: 100%;
+  width: 300px;
+  position: fixed;
+  z-index: 1;
+  top: 40;
+  bottom: 50;
+  left: 0;
+  background-color:black;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sidenav a {
+  padding: 6px 6px 6px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}

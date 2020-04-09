@@ -1,10 +1,155 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
   <h2>Welcome to Swasthya</h2>
-  <p>
-    To log in: <a href="{% url 'login' %}">log in</a> <br>
-    To create account:  <a href="{% url 'patient_signup' %}">Patient account</a> or a <a href="{% url 'doctor_signup' %}">Doctor account</a>.
-  </p>
  
+  <!-- <header>
+    <div class="wrapper">
+        <img src="{% static "logo4edited.png" %}" height="120px" width="300px" alt="logo">
+        <nav>
+            <ul>
+                <li><a href="app/login.php">Login</a></li>
+            </ul>
+        </nav>
+    </div>
+  </header> -->
+  
+  <div id="hero-image">
+      <div class="wrapper image_title">
+          <h2 class="image_title_font"><strong>DON'T LET YOUR DIAGNOSIS<br/>
+           CONTROL YOUR LIFE</strong></h2>
+           <label id = "description"><strong>A one-stop destination to manage all medical and non-medical responsibilities on time </strong></label>
+  
+      </div>
+  </div>
+  
+  <div id = "patient">
+    <div class = "wrapper">
+      <h3> Doctors </h3>
+    </div>
+  </div>
+  
+  <div id="features">
+    <div class="wrapper">
+      <ul>
+          <li class="doc-feature-1">
+              <h4>Patient</br> Database</h4>
+              <p>One place to keep track of all patients and their medical records</p>
+          </li>
+          <li class="doc-feature-2">
+              <h4>Daily Activity</h4>
+              <p>A seamless experience that notifies you about your daily commitments at appropriate times so that you remain organized and get more done.</p>
+          </li>
+          <li class="doc-feature-3">
+              <h4>Upcoming Appointments</h4>
+              <p> One place to see all your upcoming appointments.</p>
+          </li>
+          <div class="clear"></div>
+      </ul>
+    </div>
+    <a href="app/doctor.php" class="button-1">REGISTER</a>
+  </div>
+  
+  <br/><br/>
+  
+  <div id = "patient">
+    <div class = "wrapper">
+      <h3> PATIENTS </h3>
+    </div>
+  </div>
+  
+  <div id="features">
+  <div class="wrapper">
+      <ul>
+          <li class="feature-1">
+              <h4>Doctor</br> Appointments</h4>
+              <p>Book appointments with your doctor at your convinience</p>
+          </li>
+          <li class="feature-2">
+              <h4>Daily Activity</h4>
+              <p>A seamless experience that notifies you about your daily commitments at appropriate times so that you remain organized and get more done.</p>
+          </li>
+          <li class="feature-3">
+              <h4>Progress Tracking</h4>
+              <p> All food and exercise patterns are followed closely to guide you to better health every day.</p>
+          </li>
+          <div class="clear"></div>
+      </ul>
+  </div>
+  <a href="app\patient.php" class="button-1">REGISTER</a>
+  </div>
+  </br></br>
+  
+  
+  
+  <div id="secondary-content">
+      <div class="wrapper">
+          <article style="background-image: url('{% static "images/calender.png" %}'); height : 270px; width : 460px;">
+              <div class="overlay">
+                  <h4>Calender</h4>
+                  <p><small>Calendar View to see all upcoming events.</small></p>
+              </div>
+          </article>
+          <article style="background-image: url('{% static "images/raspberry.png" %}');">
+              <div class="overlay">
+                  <h4>Calorie Counter</h4>
+                  <p><small>Monitor diet plans and calorie counts- Allows user to select closest possible diet consumed, calculates daily calorie intake based on
+  standard index.</small></p>
+              </div>
+          </article>
+  
+          <div class="clear"></div>
+      </div>
+  </div>
+  
+  <div id="secondary-content">
+      <div class="wrapper">
+          <article style="background-image: url('{% static "images/treadmill.png" %}');">
+              <div class="overlay">
+                  <h4>Exercise Tracking</h4>
+                  <p><small>Allows user to choose type of exercise regime adopted, and a stop watch to monitor duration of exercise. All data stored
+  date-wise.</small></p>
+              </div>
+          </article>
+          <article style = "background-image: url('{% static "images/doc.png" %}');">
+              <div class="overlay">
+                  <h4>Appointments</h4>
+                  <p><small>A clear list of upcoming appointments which can be modified according to one's convinience.</small></p>
+              </div>
+          </article>
+          <div class="clear"></div>
+      </div>
+  </div>
+  
+  <div id="cta">
+      <div class="wrapper">
+          <h3>Heard Enough?</h3>
+          <p>This tool can be used to establish effective communication between patients and doctors, facilitate easy
+  accessibility of medical records (to both parties), to maintain daily records of user’s exercise
+  routines & diet plans, and thereby motivate users to keep track of their health and in turn
+  promote global well-being and better lifestyles.</p>
+          <a href="index.html" class="button-2">Get Started</a>
+      </div>
+  </div>
+  
+  <footer>
+      <div class="wrapper">
+          <div id="footer-info">
+              <p>Copyright 2019 Swasthya. All rights reserved.</p>
+              <p><a href="#">Terms of Service</a> I <a href="#">Privacy</a></p>
+          </div>
+          <div id="footer-links">
+  
+              <ul>
+                  <li><h5>Company</h5></li>
+                  <li><a href="#">About Us</a></li>
+                  <li><a href="#">Meet The Team</a></li>
+                  <li><a href="#">What We Do</a></li>
+                  <li><a href="#">Careers</a></li>
+              </ul>
+          </div>
+          <div class="clear"></div>
+      </div>
+  </footer>
+
 {% endblock %}

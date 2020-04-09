@@ -1,0 +1,17 @@
+.header {
+  padding: 100px;
+  text-align: center;
+  background: #40E0D0;
+  color: white;
+}
+.header h1 {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+h3 {
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  font: 20px "Lato", sans-serif;
+  color: #111;
+}

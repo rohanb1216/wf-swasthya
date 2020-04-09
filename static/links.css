@@ -1,0 +1,16 @@
+.main a:link, a:visited {
+  background-color: #87CEEB;
+  color: white;
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  height: 100px;
+  width: 1000px;
+
+
+}
+
+.main a:hover {
+  background-color: #40E0D0;
+}
