@@ -1,25 +1,37 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.conf import settings
-from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+# from django.utils.html import escape, mark_safe
 
-# Create your models here.
 
-typeCat=(
-    ("Doctor", "Doctor"),
-    ("Patient","Patient")
-)
+class User(AbstractUser):
+    is_doctor = models.BooleanField(default=False)
+    is_patient = models.BooleanField(default=False)
 
-class account(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    acctype = models.CharField(max_length=15,choices=typeCat, blank=False, null=False)
+gender_list=(('M','M'),('F','F'),('Other','Other'))
 
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        account.objects.create(user=instance)
+class Patient(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    name = models.CharField(max_length=50)
+    age = models.PositiveIntegerField()
+    contact= models.CharField(max_length=12)
+    email= models.EmailField()
+    gender = models.CharField(max_length=10,choices = gender_list, default = 'M')
 
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.account.save()
+    
+
+    def __str__(self):
+        return self.user.username
+
+
+class Doctor(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    name = models.CharField(max_length=50)
+    contact = models.CharField(max_length=12)
+    email= models.EmailField()
+    gender = models.CharField(max_length=10,choices = gender_list, default = 'M')
+    qualification = models.CharField(max_length=250)
+    specialisation = models.CharField(max_length=250)
+    
+
+    def __str__(self):
+        return self.user.username

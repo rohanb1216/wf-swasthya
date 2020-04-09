@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Welcome to Swasthya</h2>
+  <p>
+    To log in: <a href="{% url 'login' %}">log in</a> <br>
+    To create account:  <a href="{% url 'patient_signup' %}">Patient account</a> or a <a href="{% url 'doctor_signup' %}">Doctor account</a>.
+  </p>
+ 
+{% endblock %}
