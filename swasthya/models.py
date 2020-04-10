@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.core.validators import MinValueValidator
+
 # from django.utils.html import escape, mark_safe
 
 
@@ -10,9 +12,9 @@ class User(AbstractUser):
 gender_list=(('M','M'),('F','F'),('Other','Other'))
 
 class Patient(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='patient_profile')
     name = models.CharField(max_length=50)
-    age = models.PositiveIntegerField()
+    age = models.IntegerField()
     contact= models.CharField(max_length=12)
     email= models.EmailField()
     gender = models.CharField(max_length=10,choices = gender_list, default = 'M')
@@ -24,7 +26,7 @@ class Patient(models.Model):
 
 
 class Doctor(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True,related_name='doctor_profile')
     name = models.CharField(max_length=50)
     contact = models.CharField(max_length=12)
     email= models.EmailField()
