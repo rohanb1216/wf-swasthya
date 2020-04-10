@@ -1,22 +1,37 @@
 <!doctype html>
 <html lang="en">
+  {% load static %}
   <head>
     <meta charset="utf-8">
     <meta name="viewport">
     <title>Swasthya</title>
+    <link rel="stylesheet" type="text/css" href="{% static "css/reset.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
+    <link href='http://fonts.googleapis.com/css?family=Crete+Round' rel='stylesheet' type='text/css'>
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
     
   </head>
   <body>
-   
 
           <div>
-           
-              {% if user.is_authenticated %}
-              <p> Logged in as {{ user.username }}
-              {% else %}
-              <a href="{% url 'login' %}" class="btn btn-light" role="button">Log in</a><br>
-              <a href="{% url 'signup' %}" class="btn btn-primary" role="button">Sign up</a><br>
-              {% endif %}
+            <header>
+              <div class="wrapper">
+                  <img src="{% static "images/logo4edited.png" %}" height="120px" width="300px" alt="logo">
+                  <nav>
+                      <ul> {% if user.is_authenticated %}
+                        <p> Logged in as {{ user.username }}
+                        {% else %}
+                         <br>
+                         SIGN UP  <a href="{% url 'patient_signup' %}" class="btn btn-light" role="button">Patient account</a> | <a href="{% url 'doctor_signup' %}" class="btn btn-light" role="button">Doctor account</a>.<br>
+                        {% endif %}
+                          <li><a href="{% url 'login' %}" class="btn btn-light" role="button">Login</a></li>
+                      </ul>
+                  </nav>
+              </div>
+            </header>
+              
               <a href="{% url 'logout' %}">Log out</a>
               </p>
               <br>

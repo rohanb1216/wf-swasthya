@@ -7,7 +7,7 @@ urlpatterns = [
     path('', include('swasthya.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/signup/', swasthya.SignUpView.as_view(), name='signup'),
-    path('accounts/signup/doctor/', doctor.DoctorSignUpView.as_view(), name='doctor_signup'),
-    path('accounts/signup/patient/', patient.PatientSignUpView.as_view(), name='patient_signup'),
+    path('accounts/signup/doctor/', doctor.doctor_signup, name='doctor_signup'),
+    path('accounts/signup/patient/', patient.patient_signup, name='patient_signup'),
 
 ]
