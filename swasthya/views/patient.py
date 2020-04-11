@@ -37,8 +37,7 @@ def patient_signup(request):
                 patient_profile.save()
                 #return(redirect('p_home'))
                 return render(request, 'swasthya/patient/patient_home.html',{
-                'user_form': user_form,
-                'patient_profile_form': profile_form})
+                'patient_profile': patient_profile})
     else:
         user_form = PatientSignUpForm(prefix='UF')
         profile_form = PatientDetailsForm(prefix='PF')
