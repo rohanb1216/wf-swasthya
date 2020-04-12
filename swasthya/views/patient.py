@@ -27,17 +27,26 @@ def patient_signup(request):
     if request.method == 'POST':
         user_form = PatientSignUpForm(request.POST, prefix='UF')
         profile_form = PatientDetailsForm(request.POST, prefix='PF')
-        if user_form.is_valid():
+        print(user_form.errors.as_data())
+        print(profile_form.errors.as_data())
+        if user_form.is_valid() and profile_form.is_valid():
             user=user_form.save(commit=False)
             user.is_patient = True
             user.save()
-            if profile_form.is_valid():
-                patient_profile= profile_form.save(commit=False)
-                patient_profile.user=user
-                patient_profile.save()
-                #return(redirect('p_home'))
-                return render(request, 'swasthya/patient/patient_home.html',{
-                'patient_profile': patient_profile})
+            patient_profile= profile_form.save(commit=False)
+            patient_profile.user=user
+            patient_profile.save()
+            #return(redirect('p_home'))
+            return render(request, 'swasthya/patient/patient_home.html',{'patient_profile': patient_profile})
+        else:
+            user_form = PatientSignUpForm(prefix='UF')
+            profile_form = PatientDetailsForm(prefix='PF')
+            #context['form'] = self.form_class(self.request.POST)
+            return render(request, 'swasthya/patient/signup_patient.html',{
+                'user_form': user_form,
+                'patient_profile_form': profile_form,
+            })
+
     else:
         user_form = PatientSignUpForm(prefix='UF')
         profile_form = PatientDetailsForm(prefix='PF')

@@ -37,3 +37,8 @@ class Doctor(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class Appointment(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    time = models.DateTimeField()
