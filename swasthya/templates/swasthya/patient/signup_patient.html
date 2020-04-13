@@ -7,7 +7,7 @@
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ next }}">
         {{ user_form.as_p }}
-        {{ patient_profile_form.as_p }}
+        {{ profile_form.as_p }}
         <button type="submit" class="btn btn-success">Sign up</button>
       </form>
     

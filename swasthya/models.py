@@ -27,14 +27,14 @@ class Patient(models.Model):
 
 
 class Doctor(models.Model):
-    user = models.OneToOneField(
-        User, on_delete=models.CASCADE, primary_key=True, related_name='doctor_profile')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='doctor_profile')
     name = models.CharField(max_length=50)
     contact = models.CharField(max_length=12)
     email = models.EmailField()
     gender = models.CharField(max_length=10, choices=gender_list, default='M')
     qualification = models.CharField(max_length=250)
     specialisation = models.CharField(max_length=250)
+    location = models.CharField(max_length=100)
 
     def __str__(self):
         return self.user.username
