@@ -3,8 +3,14 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.views.generic import CreateView,ListView
+<<<<<<< HEAD
 from ..models import User, Patient
 from ..forms import PatientSignUpForm,PatientDetailsForm, BookingForm
+=======
+from ..models import User, Patient,Doctor
+from ..forms import PatientSignUpForm,PatientDetailsForm,SearchForm
+from django.db.models import Q
+>>>>>>> c8f1983fc212ad3ef548fce7ab9efebf52a2c548
 
 class PatientSignUpView(CreateView):
     model = User
@@ -44,7 +50,7 @@ def patient_signup(request):
             #context['form'] = self.form_class(self.request.POST)
             return render(request, 'swasthya/patient/signup_patient.html',{
                 'user_form': user_form,
-                'patient_profile_form': profile_form,
+                'profile_form': profile_form,
             })
 
     else:
@@ -52,7 +58,7 @@ def patient_signup(request):
         profile_form = PatientDetailsForm(request.POST, prefix='PF')
         return render(request, 'swasthya/patient/signup_patient.html',{
             'user_form': user_form,
-            'patient_profile_form': profile_form,
+            'profile_form': profile_form,
         })
 
 
@@ -70,3 +76,13 @@ def bookAppointment(request):
         return render(request, "patient/book.html", {'form':bookingForm})
 
 # def ViewAppointment(request):
+def doctor_list(request):
+    doctors=Doctor.objects.all()    
+    if(request.method=="POST"):
+        form1=SearchForm(request.POST)
+        if(form1.is_valid()):
+            doctors=Doctor.objects.all().filter(Q(specialisation=request.POST.get('specialisation','')) & Q(location=request.POST.get('location','')))
+            return render(request,"swasthya/patient/doctor_list.html",{'form1':form1,'doctors':doctors})
+    else:
+        form1=SearchForm()
+        return render (request,"swasthya/patient/doctor_list.html",{'form1':form1,'doctors':doctors})  

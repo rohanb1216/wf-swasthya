@@ -51,3 +51,9 @@ class BookingForm(forms.ModelForm):
             'date': DateInput(),
             'time': TimeInput()
         }
+        fields = ('name','contact','email','gender','qualification','specialisation','location')
+
+class SearchForm(forms.ModelForm):
+    class Meta:
+        model=Doctor
+        fields=('specialisation','location')

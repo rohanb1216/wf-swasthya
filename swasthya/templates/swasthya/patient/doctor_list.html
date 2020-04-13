@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Doctors List</h1>
+
+<h2> Filters! </h2>
+<div>
+	<form method=POST>
+	{%csrf_token%} 
+	{{ form1.as_p }} 
+    <button type="submit"> Search </button>
+    {% for doctor in doctors %}
+<table>
+<tr>
+<td>{{doctor.name}}</td>
+</tr>
+</table>
+{% endfor %}
+</div>
+
+
+
+{% endblock %}
+
+<br>
