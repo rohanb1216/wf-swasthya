@@ -34,10 +34,19 @@ def doctor_signup(request):
             doctor_profile= profile_form.save(commit=False)
             doctor_profile.user=user
             doctor_profile.save()
-            return(redirect('d_home'))
+            return render(request, 'swasthya/doctor/doctor_home.html',{'doctor_profile': doctor_profile})
+        else:
+            user_form = DoctorSignUpForm(request.POST, prefix='UF')
+            profile_form = DoctorDetailsForm(request.POST, prefix='PF')
+            #context['form'] = self.form_class(self.request.POST)
+            return render(request, 'swasthya/doctor/signup_doctor.html',{
+                'user_form': user_form,
+                'doctor_profile_form': profile_form,
+            })
+
     else:
-        user_form = DoctorSignUpForm(prefix='UF')
-        profile_form = DoctorDetailsForm(prefix='PF')
+        user_form = DoctorSignUpForm(request.POST, prefix='UF')
+        profile_form = DoctorDetailsForm(request.POST, prefix='PF')
         return render(request, 'swasthya/doctor/signup_doctor.html',{
 			'user_form': user_form,
 			'doctor_profile_form': profile_form,

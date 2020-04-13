@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.views.generic import CreateView,ListView
 from ..models import User, Patient
-from ..forms import PatientSignUpForm,PatientDetailsForm
+from ..forms import PatientSignUpForm,PatientDetailsForm, BookingForm
 
 class PatientSignUpView(CreateView):
     model = User
@@ -39,8 +39,8 @@ def patient_signup(request):
             #return(redirect('p_home'))
             return render(request, 'swasthya/patient/patient_home.html',{'patient_profile': patient_profile})
         else:
-            user_form = PatientSignUpForm(prefix='UF')
-            profile_form = PatientDetailsForm(prefix='PF')
+            user_form = PatientSignUpForm(request.POST, prefix='UF')
+            profile_form = PatientDetailsForm(request.POST, prefix='PF')
             #context['form'] = self.form_class(self.request.POST)
             return render(request, 'swasthya/patient/signup_patient.html',{
                 'user_form': user_form,
@@ -48,9 +48,25 @@ def patient_signup(request):
             })
 
     else:
-        user_form = PatientSignUpForm(prefix='UF')
-        profile_form = PatientDetailsForm(prefix='PF')
+        user_form = PatientSignUpForm(request.POST, prefix='UF')
+        profile_form = PatientDetailsForm(request.POST, prefix='PF')
         return render(request, 'swasthya/patient/signup_patient.html',{
             'user_form': user_form,
             'patient_profile_form': profile_form,
         })
+
+
+
+def bookAppointment(request):
+    if request.method == 'POST':
+        bookingForm = BookingForm(request.POST)
+        if bookingForm.is_valid():
+            bookingForm.save(commit=False)
+            return redirect("p_home")
+        else:
+            return render(request, "patient/book.html", {'form':bookingForm})
+    else:
+        bookingForm = BookingForm(request.POST)
+        return render(request, "patient/book.html", {'form':bookingForm})
+
+# def ViewAppointment(request):
