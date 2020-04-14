@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 from django.forms.utils import ValidationError
-from swasthya.models import User,Patient,Doctor
+from swasthya.models import User,Patient,Doctor, Appointment
 
 
 class DoctorSignUpForm(UserCreationForm):
@@ -34,6 +34,23 @@ class PatientDetailsForm(forms.ModelForm):
 class DoctorDetailsForm(forms.ModelForm):
     class Meta:
         model = Doctor
+        fields = ('name','contact','email','gender','qualification','specialisation')
+
+
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
+class TimeInput(forms.TimeInput):
+    input_type = 'time'
+
+class BookingForm(forms.ModelForm):
+    class Meta:
+        model = Appointment
+        exclude = ()
+        widgets = {
+            'date': DateInput(),
+            'time': TimeInput()
+        }
         fields = ('name','contact','email','gender','qualification','specialisation','location')
 
 class SearchForm(forms.ModelForm):
