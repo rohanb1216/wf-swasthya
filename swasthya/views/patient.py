@@ -2,19 +2,10 @@ from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
-<<<<<<< HEAD
 from django.views.generic import CreateView,ListView,View
-=======
-from django.views.generic import CreateView,ListView
-<<<<<<< HEAD
-from ..models import User, Patient
-from ..forms import PatientSignUpForm,PatientDetailsForm, BookingForm
-=======
->>>>>>> b2046671615cef12def8cee916f57594c436ff2e
 from ..models import User, Patient,Doctor
-from ..forms import PatientSignUpForm,PatientDetailsForm,SearchForm,SearchForm2
+from ..forms import PatientSignUpForm,PatientDetailsForm,SearchForm,SearchForm2, BookingForm
 from django.db.models import Q
->>>>>>> c8f1983fc212ad3ef548fce7ab9efebf52a2c548
 
 class PatientSignUpView(CreateView):
     model = User
@@ -65,12 +56,6 @@ def patient_signup(request):
             'profile_form': profile_form,
         })
 
-<<<<<<< HEAD
-
-=======
-
-
-def bookAppointment(request):
     if request.method == 'POST':
         bookingForm = BookingForm(request.POST)
         if bookingForm.is_valid():
@@ -83,11 +68,9 @@ def bookAppointment(request):
         return render(request, "patient/book.html", {'form':bookingForm})
 
 # def ViewAppointment(request):
->>>>>>> b2046671615cef12def8cee916f57594c436ff2e
 
 #works, but not a select menu
 def doctor_list(request):
-    doctors=Doctor.objects.all()    
     if(request.method=="POST"):
         form1=SearchForm(request.POST)
         if(form1.is_valid()):
@@ -96,7 +79,6 @@ def doctor_list(request):
     else:
         form1=SearchForm()
         return render (request,"swasthya/patient/doctor_list.html",{'form1':form1,'doctors':doctors})  
-<<<<<<< HEAD
 
 #gives select form but doesn't select
 def doctor_list_form(request):
@@ -133,5 +115,3 @@ class DoctorListView(View):
             form1 = SearchForm2()
             return render(request, 'swasthya/patient/doctor_list.html', {'form1': form1,'doctors':doctors})
         return render(request, 'swasthya/patient/doctor_list.html', {'form1': form1})
-=======
->>>>>>> b2046671615cef12def8cee916f57594c436ff2e
