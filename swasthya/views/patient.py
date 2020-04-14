@@ -2,9 +2,9 @@ from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
-from django.views.generic import CreateView,ListView
+from django.views.generic import CreateView,ListView,View
 from ..models import User, Patient,Doctor
-from ..forms import PatientSignUpForm,PatientDetailsForm,SearchForm
+from ..forms import PatientSignUpForm,PatientDetailsForm,SearchForm,SearchForm2
 from django.db.models import Q
 
 class PatientSignUpView(CreateView):
@@ -56,6 +56,7 @@ def patient_signup(request):
             'profile_form': profile_form,
         })
 
+#works, but not a select menu
 def doctor_list(request):
     doctors=Doctor.objects.all()    
     if(request.method=="POST"):
@@ -66,3 +67,39 @@ def doctor_list(request):
     else:
         form1=SearchForm()
         return render (request,"swasthya/patient/doctor_list.html",{'form1':form1,'doctors':doctors})  
+
+#gives select form but doesn't select
+def doctor_list_form(request):
+    doctors=Doctor.objects.all()    
+    if(request.method=="POST"):
+        form1=SearchForm2(request.POST)
+        if(form1.is_valid()):
+            doctors=Doctor.objects.all().filter(Q(specialisation=request.POST.get('specialisation','')) & Q(location=request.POST.get('location','')))
+            return render(request,"swasthya/patient/doctor_list.html",{'form1':form1,'doctors':doctors})
+        else:
+            form1=SearchForm2()
+            return render (request,"swasthya/patient/doctor_list.html",{'form1':form1})
+    else:
+            form1=SearchForm2()
+            return render (request,"swasthya/patient/doctor_list.html",{'form1':form1,'doctors':doctors})   
+
+#tried another method but that didn't work either
+class DoctorListView(View):
+    model = Doctor
+    form_class = SearchForm2
+    template_name = 'swasthya/patient/doctor_list.html'
+
+    def get(self, request, *args, **kwargs):
+        form1 = SearchForm2()
+        context ={'form1': form1}
+        return render(request,'swasthya/patient/doctor_list.html',context)
+    
+    def post(self, request, *args, **kwargs):
+        form1 = SearchForm2(data=request.POST)
+        specialisation = request.POST.get('specialisation')
+        form1.fields['specialisation'].choices = [(specialisation, specialisation)]
+        if form1.is_valid():
+            doctors=Doctor.objects.all().filter(Q(specialisation=request.POST.get('specialisation','')) & Q(location=request.POST.get('location','')))
+            form1 = SearchForm2()
+            return render(request, 'swasthya/patient/doctor_list.html', {'form1': form1,'doctors':doctors})
+        return render(request, 'swasthya/patient/doctor_list.html', {'form1': form1})

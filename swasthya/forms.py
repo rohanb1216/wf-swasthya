@@ -40,3 +40,14 @@ class SearchForm(forms.ModelForm):
     class Meta:
         model=Doctor
         fields=('specialisation','location')
+
+
+choices_list = Doctor.objects.order_by().values_list('specialisation').distinct()
+# choices=list(choices)
+# choices_list=[]
+# for i in choices:
+#     choices_list.append((i,i))
+
+class SearchForm2(forms.Form):
+    specialisation = forms.ModelChoiceField(queryset=Doctor.objects.order_by('specialisation').values_list('specialisation',flat=True).distinct())
+    location = forms.ModelChoiceField(queryset=Doctor.objects.order_by('location').values_list('location',flat=True).distinct())
