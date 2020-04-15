@@ -46,12 +46,12 @@ class TimeInput(forms.TimeInput):
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Appointment
-        exclude = ()
+        exclude = ('patient',)
         widgets = {
             'date': DateInput(),
             'time': TimeInput()
         }
-        fields = ('name','contact','email','gender','qualification','specialisation','location')
+        #fields = ('name','contact','email','gender','qualification','specialisation','location')
 
 class SearchForm(forms.ModelForm):
     class Meta:

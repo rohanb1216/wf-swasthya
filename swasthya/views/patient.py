@@ -56,18 +56,24 @@ def patient_signup(request):
             'profile_form': profile_form,
         })
 
+def bookAppointment(request):
+    user = Patient.objects.get(user=request.user)
     if request.method == 'POST':
         bookingForm = BookingForm(request.POST)
         if bookingForm.is_valid():
-            bookingForm.save(commit=False)
+            booking = bookingForm.save(commit=False)
+            booking.patient = user
+            booking.save()
             return redirect("p_home")
         else:
-            return render(request, "patient/book.html", {'form':bookingForm})
+            return render(request, "patient/book.html", {'form':bookingForm, 'user':user})
     else:
         bookingForm = BookingForm(request.POST)
-        return render(request, "patient/book.html", {'form':bookingForm})
+        return render(request, "patient/book.html", {'form':bookingForm, 'user':user})
 
-# def ViewAppointment(request):
+def ViewAppointment(request):
+    appointments = Appointment.objects.filter(patient = request.user)
+    return render(request, "patient/viewAppointments.html", {'appointments':appointments})
 
 #works, but not a select menu
 def doctor_list(request):
