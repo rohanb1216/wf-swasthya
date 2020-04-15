@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<table style="border: solid;">
+    {% for appointment in appointments %}
+        <tr>
+            <td>
+                {{ appointment.doctor }}
+            </td>
+            <td>
+                {{ appointment.date }}
+            </td>
+            <td>
+                {{ appointment.time }}
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

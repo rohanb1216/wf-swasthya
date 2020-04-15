@@ -3,7 +3,7 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.views.generic import CreateView,ListView,View
-from ..models import User, Patient,Doctor
+from ..models import User, Patient, Doctor, Appointment
 from ..forms import PatientSignUpForm,PatientDetailsForm,SearchForm,SearchForm2, BookingForm
 from django.db.models import Q
 
@@ -72,7 +72,8 @@ def bookAppointment(request):
         return render(request, "patient/book.html", {'form':bookingForm, 'user':user})
 
 def ViewAppointment(request):
-    appointments = Appointment.objects.filter(patient = request.user)
+    patient = Patient.objects.get(user=request.user)
+    appointments = Appointment.objects.filter(patient = patient)
     return render(request, "patient/viewAppointments.html", {'appointments':appointments})
 
 #works, but not a select menu

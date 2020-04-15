@@ -7,5 +7,6 @@ urlpatterns = [
     path('patient/', patient.p_home, name='p_home'),
     path('doctor/', doctor.d_home, name='d_home'),
     path('patient/book', patient.bookAppointment, name='book'),
+    path('patient/view', patient.ViewAppointment, name='view')
 
 ]
