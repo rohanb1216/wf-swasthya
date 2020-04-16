@@ -25,7 +25,8 @@ class PatientSignUpView(CreateView):
         return redirect('p_home')
 
 def p_home(request):
-    return render(request, 'swasthya/patient/patient_home.html')
+    patient_profile = Patient.objects.get(user=request.user)
+    return render(request, 'swasthya/patient/patient_home.html', {'patient_profile': patient_profile})
 
 def patient_signup(request):
     if request.method == 'POST':
