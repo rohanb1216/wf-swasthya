@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Doctor Home</h1>
-<tr>
-<td> User Name: {{doctor_profile.name}}</td>
-</tr>
-</table>
+<h1>Patient Home</h1>
+<a href="{% url 'profile_view' %}"> View Profile </a>
+<br/>
+<a href="{% url 'change_password' %}"> Change your password </a>
+<br/>
 {% endblock %}
 <br>

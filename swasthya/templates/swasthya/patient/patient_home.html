@@ -2,9 +2,15 @@
 
 {% block content %}
 <h1>Patient Home</h1>
-<tr>
-<td>  Name: {{patient_profile.name}}</td>
-</tr>
-</table>
+<a href="{% url 'profile_view' %}"> View Profile </a>
+<br/>
+<a href="{% url 'doctor_list' %}"> View List of doctors </a>
+<br/>
+<a href="{% url 'book' %}"> Book an appointment </a>
+<br/>
+<a href="{% url 'view' %}"> View appointments </a>
+<br/>
+<a href="{% url 'change_password' %}"> Change your password </a>
+<br/>
 {% endblock %}
 <br>

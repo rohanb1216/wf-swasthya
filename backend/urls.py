@@ -9,7 +9,5 @@ urlpatterns = [
     path('accounts/signup/', swasthya.SignUpView.as_view(), name='signup'),
     path('accounts/signup/doctor/', doctor.doctor_signup, name='doctor_signup'),
     path('accounts/signup/patient/', patient.patient_signup, name='patient_signup'),
-    #path('doctor_list', patient.doctor_list, name='doctor_list')
-    path('doctor_list', patient.doctor_list_form, name='doctor_list'),
-    #path('doctor_list',patient.DoctorListView.as_view(), name='doctor_list'),
+    
 ]

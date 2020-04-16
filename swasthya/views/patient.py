@@ -1,14 +1,16 @@
 from django.contrib import messages
-from django.contrib.auth import login
+from django.contrib.auth import login,authenticate
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.views.generic import CreateView,ListView,View
 from django.views.generic import CreateView,ListView
 from ..models import User, Patient
 from ..forms import PatientSignUpForm,PatientDetailsForm, BookingForm
-from ..models import User, Patient,Doctor
+from ..models import User, Patient,Doctor,Appointment
 from ..forms import PatientSignUpForm,PatientDetailsForm,SearchForm,SearchForm2
 from django.db.models import Q
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 
 class PatientSignUpView(CreateView):
     model = User
@@ -41,8 +43,12 @@ def patient_signup(request):
             patient_profile= profile_form.save(commit=False)
             patient_profile.user=user
             patient_profile.save()
-            #return(redirect('p_home'))
-            return render(request, 'swasthya/patient/patient_home.html',{'patient_profile': patient_profile})
+            new_user = authenticate(username=user_form.cleaned_data['username'],
+                                    password=user_form.cleaned_data['password1'],
+                                    )
+            login(request, new_user)
+            return(redirect('p_home'))
+            #return render(request, 'swasthya/patient/patient_home.html',{'patient_profile': patient_profile})
         else:
             user_form = PatientSignUpForm(request.POST, prefix='UF')
             profile_form = PatientDetailsForm(request.POST, prefix='PF')
@@ -59,6 +65,26 @@ def patient_signup(request):
             'user_form': user_form,
             'profile_form': profile_form,
         })
+
+def bookAppointment(request):
+    user = Patient.objects.get(user=request.user)
+    if request.method == 'POST':
+        bookingForm = BookingForm(request.POST)
+        if bookingForm.is_valid():
+            booking = bookingForm.save(commit=False)
+            booking.patient = user
+            booking.save()
+            return redirect("p_home")
+        else:
+            return render(request, "swasthya/patient/book.html", {'form':bookingForm, 'user':user})
+    else:
+        bookingForm = BookingForm(request.POST)
+        return render(request, "swasthya/patient/book.html", {'form':bookingForm, 'user':user})
+
+def ViewAppointment(request):
+    patient = Patient.objects.get(user=request.user)
+    appointments = Appointment.objects.filter(patient = patient)
+    return render(request, "swasthya/patient/viewAppointments.html", {'appointments':appointments})
 
 
 #works, but not a select menu
@@ -108,3 +134,35 @@ class DoctorListView(View):
             form1 = SearchForm2()
             return render(request, 'swasthya/patient/doctor_list.html', {'form1': form1,'doctors':doctors})
         return render(request, 'swasthya/patient/doctor_list.html', {'form1': form1})
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('p_home')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'swasthya/patient/change_password.html', {
+        'form': form
+    })
+
+def profile_edit(request):
+        user = Patient.objects.get(user=request.user)
+        #quotes=quote.objects.get(pk=pk)
+        if(request.method=="POST"):
+            form=PatientDetailsForm(request.POST,instance=user)
+            if(form.is_valid()):
+                form.save()
+                update_session_auth_hash(request, user)
+                return(redirect("p_home"))
+        else:
+            form=PatientDetailsForm(instance=user)
+            return render (request,'swasthya/patient/profile_edit.html',{'form':form})  
+def profile_view(request):
+        patient = Patient.objects.get(user=request.user)
+        return render (request,'swasthya/patient/profile_view.html',{'patient':patient})

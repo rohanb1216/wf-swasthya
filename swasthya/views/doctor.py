@@ -1,10 +1,12 @@
 from django.contrib import messages
-from django.contrib.auth import login
+from django.contrib.auth import login,authenticate
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.views.generic import CreateView
 from ..forms import DoctorSignUpForm,DoctorDetailsForm
 from ..models import User, Doctor
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 
 class DoctorSignUpView(CreateView):
     model = User
@@ -36,7 +38,12 @@ def doctor_signup(request):
             doctor_profile= profile_form.save(commit=False)
             doctor_profile.user=user
             doctor_profile.save()
-            return render(request,'swasthya/doctor/doctor_home.html',{'doctor_profile': doctor_profile})
+            new_user = authenticate(username=user_form.cleaned_data['username'],
+                                    password=user_form.cleaned_data['password1'],
+                                    )
+            login(request, new_user)
+            return(redirect('d_home'))
+            #return render(request,'swasthya/doctor/doctor_home.html',{'doctor_profile': doctor_profile})
         else:
             user_form = DoctorSignUpForm(prefix='UF')
             doctor_profile = DoctorDetailsForm(prefix='PF')
@@ -52,3 +59,34 @@ def doctor_signup(request):
 			'user_form': user_form,
 			'doctor_profile': doctor_profile,
 		})
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('d_home')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'swasthya/doctor/change_password.html', {
+        'form': form
+    })
+
+def profile_edit(request):
+        user = Doctor.objects.get(user=request.user)
+        if(request.method=="POST"):
+            form=DoctorDetailsForm(request.POST,instance=user)
+            if(form.is_valid()):
+                form.save()
+                update_session_auth_hash(request, user)
+                return(redirect("d_home"))
+        else:
+            form=DoctorDetailsForm(instance=user)
+            return render (request,'swasthya/doctor/profile_edit.html',{'form':form})  
+def profile_view(request):
+        doctor = Doctor.objects.get(user=request.user)
+        return render (request,'swasthya/doctor/profile_view.html',{'doctor':doctor})
