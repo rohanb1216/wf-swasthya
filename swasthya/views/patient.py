@@ -3,8 +3,11 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.views.generic import CreateView,ListView,View
-from ..models import User, Patient, Doctor, Appointment
-from ..forms import PatientSignUpForm,PatientDetailsForm,SearchForm,SearchForm2, BookingForm
+from django.views.generic import CreateView,ListView
+from ..models import User, Patient
+from ..forms import PatientSignUpForm,PatientDetailsForm, BookingForm
+from ..models import User, Patient,Doctor
+from ..forms import PatientSignUpForm,PatientDetailsForm,SearchForm,SearchForm2
 from django.db.models import Q
 
 class PatientSignUpView(CreateView):
@@ -56,28 +59,10 @@ def patient_signup(request):
             'profile_form': profile_form,
         })
 
-def bookAppointment(request):
-    user = Patient.objects.get(user=request.user)
-    if request.method == 'POST':
-        bookingForm = BookingForm(request.POST)
-        if bookingForm.is_valid():
-            booking = bookingForm.save(commit=False)
-            booking.patient = user
-            booking.save()
-            return redirect("p_home")
-        else:
-            return render(request, "patient/book.html", {'form':bookingForm, 'user':user})
-    else:
-        bookingForm = BookingForm(request.POST)
-        return render(request, "patient/book.html", {'form':bookingForm, 'user':user})
-
-def ViewAppointment(request):
-    patient = Patient.objects.get(user=request.user)
-    appointments = Appointment.objects.filter(patient = patient)
-    return render(request, "patient/viewAppointments.html", {'appointments':appointments})
 
 #works, but not a select menu
 def doctor_list(request):
+    doctors=Doctor.objects.all()    
     if(request.method=="POST"):
         form1=SearchForm(request.POST)
         if(form1.is_valid()):
