@@ -5,13 +5,13 @@ from django.shortcuts import redirect, render
 from django.views.generic import CreateView,ListView,View
 from django.views.generic import CreateView,ListView
 from ..models import User, Patient
-from ..forms import PatientSignUpForm,PatientDetailsForm, BookingForm
-from ..models import User, Patient,Doctor,Appointment
+from ..forms import PatientSignUpForm,PatientDetailsForm, BookingForm,MedicalRecordUploadForm
+from ..models import User, Patient,Doctor,Appointment,MedicalRecords
 from ..forms import PatientSignUpForm,PatientDetailsForm,SearchForm,SearchForm2
 from django.db.models import Q
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
-
+import datetime
 class PatientSignUpView(CreateView):
     model = User
     form_class = PatientSignUpForm
@@ -99,6 +99,10 @@ def doctor_list(request):
         form1=SearchForm()
         return render (request,"swasthya/patient/doctor_list.html",{'form1':form1,'doctors':doctors})  
 
+def doctor_detail(request,name):
+    doctor=  Doctor.objects.get(user=name)
+    return render(request,"swasthya/patient/doctor_detail.html",{"doctor":doctor})
+
 #gives select form but doesn't select
 def doctor_list_form(request):
     doctors=Doctor.objects.all()    
@@ -135,7 +139,7 @@ class DoctorListView(View):
             return render(request, 'swasthya/patient/doctor_list.html', {'form1': form1,'doctors':doctors})
         return render(request, 'swasthya/patient/doctor_list.html', {'form1': form1})
 
-def change_password(request):
+def change_password_patient(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
@@ -151,7 +155,7 @@ def change_password(request):
         'form': form
     })
 
-def profile_edit(request):
+def profile_edit_patient(request):
         user = Patient.objects.get(user=request.user)
         #quotes=quote.objects.get(pk=pk)
         if(request.method=="POST"):
@@ -159,10 +163,30 @@ def profile_edit(request):
             if(form.is_valid()):
                 form.save()
                 update_session_auth_hash(request, user)
-                return(redirect("p_home"))
+                return(redirect("profile_view_patient"))
         else:
             form=PatientDetailsForm(instance=user)
             return render (request,'swasthya/patient/profile_edit.html',{'form':form})  
-def profile_view(request):
+def profile_view_patient(request):
         patient = Patient.objects.get(user=request.user)
         return render (request,'swasthya/patient/profile_view.html',{'patient':patient})
+
+def add_medical_record(request):
+    user = Patient.objects.get(user=request.user)
+    if request.method == 'POST':
+        form = MedicalRecordUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            record = form.save(commit=False)
+            record.patient = user
+            record.save()
+            return redirect("view_medical_records")
+        else:
+            return render(request, "swasthya/patient/add_medical_record.html", {'form':form, 'user':user})
+    else:
+        form = MedicalRecordUploadForm(request.POST)
+        return render(request, "swasthya/patient/add_medical_record.html", {'form':form, 'user':user})
+
+def view_medical_records(request):
+    patient = Patient.objects.get(user=request.user)
+    records=MedicalRecords.objects.filter(patient=patient)
+    return render (request,'swasthya/patient/view_medical_records.html',{'records':records})
