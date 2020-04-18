@@ -42,10 +42,17 @@ class Doctor(models.Model):
 
 
 class Appointment(models.Model):
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    # patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-    date = models.DateField()
-    time = models.TimeField()
+    date = models.DateField(default=datetime.date.today)
+    slot1 = models.CharField(max_length=100, default='', blank=True)
+    slot2 = models.CharField(max_length=100, default='', blank=True)
+    slot3 = models.CharField(max_length=100, default='', blank=True)
+    slot4 = models.CharField(max_length=100, default='', blank=True)
+    slot5 = models.CharField(max_length=100, default='', blank=True)
+    slot6 = models.CharField(max_length=100, default='', blank=True)
+    slot7 = models.CharField(max_length=100, default='', blank=True)
+    
 
 class MedicalRecords(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)

@@ -9,17 +9,60 @@
     <form method="POST" novalidate>
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-success">Book</button>
+        {{ slotForm.as_p }}
+        <button type="submit" class="btn btn-success">Next</button>
     </form>
 </div>
-<script>
-    $(function () {
-      $("#id_time").datetimepicker({
-        format: 'd/m/Y H:i',
-      });
-    });
-  </script>
-
 <br/>
 <a href="{% url 'p_home' %}"> Home </a>
+{% endblock %}
+
+{% block js %}
+<script>
+  $("#id_doctor").change(function () {
+      var doctor = $(this).val();
+      console.log(doctor)
+      var date = $("#id_date").val()
+      $.ajax({
+        url: 'ajax/update_values/',
+        data: {
+          'doctor': doctor,
+          'date': date
+        },
+        dataType: 'json',
+        success: function (data) {
+          console.log(data)
+          buttons = $('radio')
+          for(i=0;i<7;i++){
+            if(!data[i]){
+              buttons[i].hide()
+            }
+          }
+        }
+      });
+
+    });
+    $("#id_date").change(function () {
+      var date = $(this).val();
+      console.log(date)
+      var doctor = $("#id_doctor").val()
+      $.ajax({
+        url: 'ajax/update_values/',
+        data: {
+          'doctor': doctor,
+          'date': date
+        },
+        dataType: 'json',
+        success: function (data) {
+          buttons = $('radio')
+          for(i=0;i<7;i++){
+            if(!data[i]){
+              buttons[i].hide()
+            }
+          }
+        }
+      });
+
+    });
+</script>
 {% endblock %}

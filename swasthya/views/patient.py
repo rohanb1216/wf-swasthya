@@ -5,13 +5,14 @@ from django.shortcuts import redirect, render
 from django.views.generic import CreateView,ListView,View
 from django.views.generic import CreateView,ListView
 from ..models import User, Patient
-from ..forms import PatientSignUpForm,PatientDetailsForm, BookingForm,MedicalRecordUploadForm
+from ..forms import PatientSignUpForm,PatientDetailsForm, BookingFormInit,MedicalRecordUploadForm, BookingFormFinal
 from ..models import User, Patient,Doctor,Appointment,MedicalRecords
 from ..forms import PatientSignUpForm,PatientDetailsForm,SearchForm,SearchForm2
 from django.db.models import Q
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 import datetime
+from django.http import JsonResponse
 class PatientSignUpView(CreateView):
     model = User
     form_class = PatientSignUpForm
@@ -67,19 +68,78 @@ def patient_signup(request):
         })
 
 def bookAppointment(request):
+    slots = [True, True, True, True, True, True, True]
     user = Patient.objects.get(user=request.user)
     if request.method == 'POST':
-        bookingForm = BookingForm(request.POST)
+        bookingForm = BookingFormInit(request.POST)
+        slotForm = BookingFormFinal(request.POST)
         if bookingForm.is_valid():
             booking = bookingForm.save(commit=False)
-            booking.patient = user
-            booking.save()
+            appointment = Appointment.objects.get(doctor = booking.doctor, date = booking.date)
+            
+            # booking.save()
             return redirect("p_home")
+            # doctor = Doctor.objects.get(name = )
+            # if Appointment.objects.get(doctor = booking.doctor, date = booking.date).exists():
+            #     appointment = Appointment.objects.get(doctor = booking.doctor, date = booking.date)
+            #     # slots = [True, True, True, True, True, True, True]
+            #     if appointment.slot1 != '':
+            #         slots[0] = False
+            #     if appointment.slot2 != '':
+            #         slots[0] = False
+            #     if appointment.slot3 != '':
+            #         slots[0] = False
+            #     if appointment.slot4 != '':
+            #         slots[0] = False
+            #     if appointment.slot5 != '':
+            #         slots[0] = False
+            #     if appointment.slot6 != '':
+            #         slots[0] = False
+            #     if appointment.slot7 != '':
+            #         slots[0] = False
+                
+
+
+            # else:
+            #     appointment = Appointment(doctor = booking.doctor, date = booking.date)
+            #     appointment.save()
+
         else:
-            return render(request, "swasthya/patient/book.html", {'form':bookingForm, 'user':user})
+            return render(request, "swasthya/patient/book.html", {'form':bookingForm, 'slotForm':slotForm})
     else:
-        bookingForm = BookingForm(request.POST)
-        return render(request, "swasthya/patient/book.html", {'form':bookingForm, 'user':user})
+        bookingForm = BookingFormInit(request.POST)
+        slotForm = BookingFormFinal(request.POST)
+        return render(request, "swasthya/patient/book.html", {'form':bookingForm, 'slotForm':slotForm})
+
+def ExistingSlots(request):
+    slots = [True, True, True, True, True, True, True]
+    doctor = request.GET.get('doctor', None)
+    date = request.GET.get('date', None)
+    # print(type(date))
+    if Appointment.objects.filter(date = '2020-04-16').exists():
+        appointment = Appointment.objects.get(date = '2020-04-16')
+        # slots = [True, True, True, True, True, True, True]
+        if appointment.slot1 != '':
+            slots[0] = False
+        if appointment.slot2 != '':
+            slots[0] = False
+        if appointment.slot3 != '':
+            slots[0] = False
+        if appointment.slot4 != '':
+            slots[0] = False
+        if appointment.slot5 != '':
+            slots[0] = False
+        if appointment.slot6 != '':
+            slots[0] = False
+        if appointment.slot7 != '':
+            slots[0] = False
+        return JsonResponse(slots, safe = False)
+
+
+    else:
+        appointment = Appointment.objects.create(doctor = doctor, date = date)
+        return JsonResponse(slots, safe = False)
+
 
 def ViewAppointment(request):
     patient = Patient.objects.get(user=request.user)

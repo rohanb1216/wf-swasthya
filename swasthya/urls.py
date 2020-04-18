@@ -23,5 +23,6 @@ urlpatterns = [
     path('doctor/view_appointments', doctor.view_appointments, name='view_appointments'),
     path('doctor/view_patients', doctor.view_patients, name='view_patients'),
     path('doctor/patient_detail/<name>', doctor.patient_detail,name="patient_detail"),
+    path('patient/ajax/update_values/', patient.ExistingSlots, name='ExistingSlots'),
 
 ]

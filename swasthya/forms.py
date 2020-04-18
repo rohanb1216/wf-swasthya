@@ -4,6 +4,15 @@ from django.db import transaction
 from django.forms.utils import ValidationError
 from swasthya.models import User,Patient,Doctor, Appointment,MedicalRecords
 
+slots = (
+    ('slot1', '10:00 AM - 10:30 AM'),
+    ('slot2', '10:30 AM - 11:00 AM'),
+    ('slot3', '11:00 AM - 11:30 AM'),
+    ('slot4', '11:30 PM - 12:00 PM'),
+    ('slot5', '13:00 PM - 13:30 PM'),
+    ('slot6', '13:30 PM - 14:00 PM'),
+    ('slot7', '14:00 PM - 14:30 PM')
+)
 
 class DoctorSignUpForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
@@ -43,16 +52,18 @@ class DateInput(forms.DateInput):
 class TimeInput(forms.TimeInput):
     input_type = 'time'
 
-class BookingForm(forms.ModelForm):
+class BookingFormInit(forms.ModelForm):
     class Meta:
         model = Appointment
-        exclude = ('patient',)
+        fields = ('doctor','date')
         widgets = {
             'date': DateInput(),
-            'time': TimeInput()
         }
         #fields = ('name','contact','email','gender','qualification','specialisation','location')
 
+class BookingFormFinal(forms.Form):
+    slots = forms.ChoiceField(choices=slots, widget=forms.RadioSelect)
+        
 class SearchForm(forms.ModelForm):
     class Meta:
         model=Doctor
