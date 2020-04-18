@@ -3,11 +3,11 @@ from django.contrib.auth import login,authenticate
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.views.generic import CreateView
-from ..forms import DoctorSignUpForm,DoctorDetailsForm
-from ..models import User, Doctor
+from ..forms import DoctorSignUpForm,DoctorDetailsForm,DateForm
+from ..models import User, Doctor, Patient, Appointment, MedicalRecords
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
-
+from django.db.models import Q
 class DoctorSignUpView(CreateView):
     model = User
     form_class = DoctorSignUpForm
@@ -83,10 +83,37 @@ def profile_edit(request):
             if(form.is_valid()):
                 form.save()
                 update_session_auth_hash(request, user)
-                return(redirect("d_home"))
+                return(redirect("profile_view"))
         else:
             form=DoctorDetailsForm(instance=user)
             return render (request,'swasthya/doctor/profile_edit.html',{'form':form})  
 def profile_view(request):
         doctor = Doctor.objects.get(user=request.user)
         return render (request,'swasthya/doctor/profile_view.html',{'doctor':doctor})
+
+def view_patients(request):
+    doctor = Doctor.objects.get(user=request.user)
+    patients = Appointment.objects.filter(doctor = doctor)
+    return render(request, "swasthya/doctor/view_patients.html", {'patients':patients})
+
+def patient_detail(request,name):
+    patient=  Patient.objects.get(user_id=name)
+    records= MedicalRecords.objects.filter(patient=patient)
+    return render(request,"swasthya/doctor/patient_detail.html",{"patient":patient,"records":records})
+
+def view_appointments(request):
+    doctor = Doctor.objects.get(user=request.user)
+    appointments = Appointment.objects.filter(doctor = doctor)
+    if(request.method=="POST"):
+            form=DateForm(request.POST)
+            if(form.is_valid()):
+                start_date = form.cleaned_data['start']
+                end_date = form.cleaned_data['end']
+                try:
+                    appointments = Appointment.objects.filter(Q(date__gte=start_date) & Q(date__lte=end_date) & Q(doctor = doctor))
+                except Appointment.DoesNotExist:
+                    appointments = None
+                return render(request, "swasthya/doctor/view_appointments.html", {'appointments':appointments,'form':form})
+    else:
+        form=DateForm()
+        return render (request,'swasthya/doctor/view_appointments.html',{'form':form})
