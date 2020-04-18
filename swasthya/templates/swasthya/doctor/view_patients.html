@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<table style="border: solid;">
+    {% for p in patients %}
+        <tr>
+            <td>ID {{ p.id }}</td>
+            <td>
+                <a href="{% url 'patient_detail' name=p.patient.user_id %}">{{p.patient}}</a>
+            </td>
+               
+            </td>
+          
+    {% endfor %}
+</table>
+<br/>
+<a href="{% url 'd_home' %}"> Home </a>
+{% endblock %}
+

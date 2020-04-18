@@ -1,0 +1,22 @@
+<h1> Details of {{patient.name}} </h1>
+
+Name:{{ patient.name }} <br/>
+Age:{{ patient.age }} <br/>
+Gender:{{ patient.gender }} <br/>
+Contact:{{ patient.contact }} <br/>
+Email :{{ patient.email }} <br/>
+
+<table style="border: solid;" >
+{% for r in records %}
+<tr>
+    <td>{{ r.date }}</td>
+    <td>{{r.title}}</td>
+    <td> <img src='{{ r.record.url }}' alt="NOT found" width=500/></td>
+</tr>
+{% endfor %}
+</table>
+
+<br/>
+<h1>
+<a href="{% url 'view_patients' %}"> Back to Patients List </a>
+</h1>
