@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1><a href="{% url 'add_medical_record' %}"> Add a medical record </a>
+    <br/></h1>
+<table style="border: solid;" >
+{% for r in records %}
+<tr>
+    <td>{{ r.date }}</td>
+    <td>{{r.title}}</td>
+    <td> <img src='{{ r.record.url }}' alt="NOT found" width=500/></td>
+</tr>
+{% endfor %}
+</table>
+<br/>
+<a href="{% url 'p_home' %}"> Home </a>
+{% endblock %}
+
