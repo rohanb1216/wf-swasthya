@@ -9,10 +9,10 @@
 	{%csrf_token%} 
 	{{ form1.as_p }} 
     <button type="submit"> Search </button>
-    {% for doctor in doctors %}
+{% for d in doctors %}
 <table>
 <tr>
-<td>{{doctor.name}}</td>
+<td><a href="{% url 'doctor_detail' name=d.user_id %}">{{d.name}}</a></td>
 </tr>
 </table>
 {% endfor %}

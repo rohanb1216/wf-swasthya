@@ -1,0 +1,13 @@
+<h1> Details of {{doctor.name}} </h1>
+
+Name:{{ doctor.name }} <br/>
+Gender:{{ doctor.gender }} <br/>
+Contact:{{ doctor.contact }} <br/>
+Email :{{ doctor.email }} <br/>
+Qualification: {{ doctor.qualification }}  <br/>
+Specialisation: {{ doctor.specialisation }}
+
+<br/>
+<h1>
+<a href="{% url 'doctor_list' %}"> Back to Doctors List </a>
+</h1>
