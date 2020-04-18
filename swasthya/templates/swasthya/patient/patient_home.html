@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>Patient Home</h1>
-<a href="{% url 'profile_view' %}"> View Profile </a>
+<a href="{% url 'profile_view_patient' %}"> View Profile </a>
 <br/>
 <a href="{% url 'doctor_list' %}"> View List of doctors </a>
 <br/>
@@ -10,7 +10,9 @@
 <br/>
 <a href="{% url 'view' %}"> View appointments </a>
 <br/>
-<a href="{% url 'change_password' %}"> Change your password </a>
+<a href="{% url 'change_password_patient' %}"> Change your password </a>
+<br/>
+<a href="{% url 'view_medical_records' %}"> View your medical records </a>
 <br/>
 {% endblock %}
 <br>

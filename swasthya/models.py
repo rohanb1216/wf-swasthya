@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+import datetime
 # from django.core.validators import MinValueValidator
 
 # from django.utils.html import escape, mark_safe
@@ -45,3 +46,9 @@ class Appointment(models.Model):
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     date = models.DateField()
     time = models.TimeField()
+
+class MedicalRecords(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    title= models.CharField(max_length=200, default='Record')
+    date = models.DateField(default=datetime.date.today)
+    record = models.ImageField(upload_to = 'images/', default = 'images/no-img.png')
