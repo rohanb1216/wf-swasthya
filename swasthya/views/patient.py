@@ -122,17 +122,17 @@ def ExistingSlots(request):
         if appointment.slot1 != '':
             slots[0] = False
         if appointment.slot2 != '':
-            slots[0] = False
+            slots[1] = False
         if appointment.slot3 != '':
-            slots[0] = False
+            slots[2] = False
         if appointment.slot4 != '':
-            slots[0] = False
+            slots[3] = False
         if appointment.slot5 != '':
-            slots[0] = False
+            slots[4] = False
         if appointment.slot6 != '':
-            slots[0] = False
+            slots[5] = False
         if appointment.slot7 != '':
-            slots[0] = False
+            slots[6] = False
         return JsonResponse(slots, safe = False)
 
 
