@@ -70,43 +70,39 @@ def patient_signup(request):
 def bookAppointment(request):
     slots = [True, True, True, True, True, True, True]
     user = Patient.objects.get(user=request.user)
+    print(request.user)
     if request.method == 'POST':
         bookingForm = BookingFormInit(request.POST)
         slotForm = BookingFormFinal(request.POST)
         if bookingForm.is_valid():
             booking = bookingForm.save(commit=False)
+            slotForm.is_valid()
+            slot = slotForm.cleaned_data
+            slot = slot['slots']
+            # print(type(slot))
+            # print(slot)
             appointment = Appointment.objects.get(doctor = booking.doctor, date = booking.date)
-            # booking.save()
+            if(slot == 'slot1'):
+                appointment.slot1 = request.user
+            elif slot == 'slot2':
+                appointment.slot2 = request.user
+            elif slot == 'slot3':
+                appointment.slot3 = request.user
+            elif slot == 'slot4':
+                appointment.slot4 = request.user
+            elif slot == 'slot5':
+                appointment.slot5 = request.user
+            elif slot == 'slot6':
+                appointment.slot6 = request.user
+            elif slot == 'slot7':
+                appointment.slot6 = request.user
+            # appointment.save()
+            
+            
             return redirect("p_home")
-            # doctor = Doctor.objects.get(name = )
-            # if Appointment.objects.get(doctor = booking.doctor, date = booking.date).exists():
-            #     appointment = Appointment.objects.get(doctor = booking.doctor, date = booking.date)
-            #     # slots = [True, True, True, True, True, True, True]
-            #     if appointment.slot1 != '':
-            #         slots[0] = False
-            #     if appointment.slot2 != '':
-            #         slots[0] = False
-            #     if appointment.slot3 != '':
-            #         slots[0] = False
-            #     if appointment.slot4 != '':
-            #         slots[0] = False
-            #     if appointment.slot5 != '':
-            #         slots[0] = False
-            #     if appointment.slot6 != '':
-            #         slots[0] = False
-            #     if appointment.slot7 != '':
-            #         slots[0] = False
-                
-
-
-            # else:
-            #     appointment = Appointment(doctor = booking.doctor, date = booking.date)
-            #     appointment.save()
-
-        else:
-            return render(request, "swasthya/patient/book.html", {'form':bookingForm, 'slotForm':slotForm})
+            
     else:
-        bookingForm = BookingFormInit(request.POST)
+        bookingForm = BookingFormInit(request.POST, initial={'date': datetime.date.today})
         slotForm = BookingFormFinal(request.POST)
         return render(request, "swasthya/patient/book.html", {'form':bookingForm, 'slotForm':slotForm})
 
@@ -114,9 +110,11 @@ def ExistingSlots(request):
     slots = [True, True, True, True, True, True, True]
     doctor = request.GET.get('doctor', None)
     date = request.GET.get('date', None)
+    doctor = Doctor.objects.get(pk=doctor)
     # print(type(date))
-    if Appointment.objects.filter(date = '2020-04-16').exists():
-        appointment = Appointment.objects.get(date = '2020-04-16')
+    if Appointment.objects.filter(date = date, doctor=doctor).exists():
+        print('if')
+        appointment = Appointment.objects.get(date = date, doctor = doctor)
         # slots = [True, True, True, True, True, True, True]
         if appointment.slot1 != '':
             slots[0] = False
@@ -136,13 +134,15 @@ def ExistingSlots(request):
 
 
     else:
-        appointment = Appointment.objects.create(doctor = doctor, date = date)
+        appointment = Appointment.objects.create(doctor = doctor, date = date, slot1 = '', slot2 = '', slot3 = '', slot4 = '', slot5 = '', slot6 = '', slot7 = '')
+        print(Appointment.objects.all())
+        print('else')
         return JsonResponse(slots, safe = False)
 
 
 def ViewAppointment(request):
     patient = Patient.objects.get(user=request.user)
-    appointments = Appointment.objects.filter(patient = patient)
+    appointments = Appointment.objects.filter()
     return render(request, "swasthya/patient/viewAppointments.html", {'appointments':appointments})
 
 

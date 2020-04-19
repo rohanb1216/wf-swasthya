@@ -10,7 +10,7 @@
         {% csrf_token %}
         {{ form.as_p }}
         {{ slotForm.as_p }}
-        <button type="submit" class="btn btn-success">Next</button>
+        <button type="submit" class="btn btn-success">Book</button>
     </form>
 </div>
 <br/>
@@ -23,6 +23,7 @@
       var doctor = $(this).val();
       console.log(doctor)
       var date = $("#id_date").val()
+      if(date!=''){
       $.ajax({
         url: 'ajax/update_values/',
         data: {
@@ -32,20 +33,21 @@
         dataType: 'json',
         success: function (data) {
           console.log(data)
-          buttons = $('radio')
+          buttons = $('#id_slots').children()
           for(i=0;i<7;i++){
             if(!data[i]){
-              buttons[i].hide()
+              buttons.eq(i).hide()
             }
           }
         }
       });
-
+      }
     });
     $("#id_date").change(function () {
       var date = $(this).val();
       console.log(date)
       var doctor = $("#id_doctor").val()
+      if(doctor!=""){
       $.ajax({
         url: 'ajax/update_values/',
         data: {
@@ -54,15 +56,15 @@
         },
         dataType: 'json',
         success: function (data) {
-          buttons = $('radio')
+          buttons = $('#id_slots').children()
           for(i=0;i<7;i++){
             if(!data[i]){
-              buttons[i].hide()
+              buttons.eq(i).hide()
             }
           }
         }
       });
-
+    }
     });
 </script>
 {% endblock %}
