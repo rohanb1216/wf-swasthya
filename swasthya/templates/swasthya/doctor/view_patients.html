@@ -1,17 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
-
+<h1>{{ doctor_name }}</h1>
 <table style="border: solid;">
-    {% for p in patients %}
+
+    {% for p in patient_set %}
         <tr>
-            <td>ID {{ p.id }}</td>
-            <td>
-                <a href="{% url 'patient_detail' name=p.patient.user_id %}">{{p.patient}}</a>
-            </td>
-               
-            </td>
+            <td><a href="{% url 'patient_detail' name=p %}">{{p}}</a></td>
           
     {% endfor %}
+
 </table>
 <br/>
 <a href="{% url 'd_home' %}"> Home </a>

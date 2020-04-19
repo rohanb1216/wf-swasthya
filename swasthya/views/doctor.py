@@ -93,11 +93,31 @@ def profile_view(request):
 
 def view_patients(request):
     doctor = Doctor.objects.get(user=request.user)
-    patients = Appointment.objects.filter(doctor = doctor)
-    return render(request, "swasthya/doctor/view_patients.html", {'patients':patients})
+    doctor_name=doctor.user_id
+    #patients = Appointment.objects.filter(doctor = doctor)
+    patients=Appointment.objects.raw('SELECT id,doctor_id,date,slot1, slot2, slot3, slot4, slot5, slot6, slot7 from swasthya_appointment  where doctor_id= %s',[doctor_name])
+    patient_list=[]
+    for i in patients:
+        if(i.slot1!=''):
+            patient_list.append(i.slot1)
+        if(i.slot2!=''):
+            patient_list.append(i.slot2)
+        if(i.slot3!=''):
+            patient_list.append(i.slot3)
+        if(i.slot4!=''):
+            patient_list.append(i.slot4)
+        if(i.slot5!=''):
+            patient_list.append(i.slot5)
+        if(i.slot6!=''):
+            patient_list.append(i.slot6)
+        if(i.slot7!=''):
+            patient_list.append(i.slot7)
+    patient_set=list(set(patient_list))
+    return render(request, "swasthya/doctor/view_patients.html", {'patients':patients,'patient_set':patient_set,'doctor_name':doctor_name})
 
 def patient_detail(request,name):
-    patient=  Patient.objects.get(user_id=name)
+    ID= User.objects.get(username=name)
+    patient=  Patient.objects.get(user_id=ID)
     records= MedicalRecords.objects.filter(patient=patient)
     return render(request,"swasthya/doctor/patient_detail.html",{"patient":patient,"records":records})
 

@@ -140,7 +140,7 @@ def ExistingSlots(request):
 
 
 def ViewAppointment(request):
-    appointments = Appointment.objects.raw('SELECT id, doctor_id, date FROM swasthya_appointment WHERE %s IN(slot1, slot2, slot3, slot4, slot5, slot6, slot7);', [request.user.username])
+    appointments = Appointment.objects.raw('SELECT id, doctor_id, date, slot1, slot2, slot3, slot4, slot5, slot6, slot7 FROM swasthya_appointment WHERE %s IN(slot1, slot2, slot3, slot4, slot5, slot6, slot7);', [request.user.username])
     return render(request, "swasthya/patient/viewAppointments.html", {'appointments':appointments})
 
 
