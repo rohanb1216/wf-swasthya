@@ -69,8 +69,7 @@ def patient_signup(request):
 
 def bookAppointment(request):
     slots = [True, True, True, True, True, True, True]
-    user = Patient.objects.get(user=request.user)
-    print(request.user)
+    print(type(request.user.username))
     if request.method == 'POST':
         bookingForm = BookingFormInit(request.POST)
         slotForm = BookingFormFinal(request.POST)
@@ -83,20 +82,20 @@ def bookAppointment(request):
             # print(slot)
             appointment = Appointment.objects.get(doctor = booking.doctor, date = booking.date)
             if(slot == 'slot1'):
-                appointment.slot1 = request.user
+                appointment.slot1 = request.user.username
             elif slot == 'slot2':
-                appointment.slot2 = request.user
+                appointment.slot2 = request.user.username
             elif slot == 'slot3':
-                appointment.slot3 = request.user
+                appointment.slot3 = request.user.username
             elif slot == 'slot4':
-                appointment.slot4 = request.user
+                appointment.slot4 = request.user.username
             elif slot == 'slot5':
-                appointment.slot5 = request.user
+                appointment.slot5 = request.user.username
             elif slot == 'slot6':
-                appointment.slot6 = request.user
+                appointment.slot6 = request.user.username
             elif slot == 'slot7':
-                appointment.slot6 = request.user
-            # appointment.save()
+                appointment.slot6 = request.user.username
+            appointment.save()
             
             
             return redirect("p_home")
@@ -141,8 +140,7 @@ def ExistingSlots(request):
 
 
 def ViewAppointment(request):
-    patient = Patient.objects.get(user=request.user)
-    appointments = Appointment.objects.filter()
+    appointments = Appointment.objects.raw('SELECT id, doctor_id, date FROM swasthya_appointment WHERE %s IN(slot1, slot2, slot3, slot4, slot5, slot6, slot7);', [request.user.username])
     return render(request, "swasthya/patient/viewAppointments.html", {'appointments':appointments})
 
 
