@@ -76,7 +76,6 @@ def bookAppointment(request):
         if bookingForm.is_valid():
             booking = bookingForm.save(commit=False)
             appointment = Appointment.objects.get(doctor = booking.doctor, date = booking.date)
-            
             # booking.save()
             return redirect("p_home")
             # doctor = Doctor.objects.get(name = )
