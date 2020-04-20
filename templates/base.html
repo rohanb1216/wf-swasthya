@@ -27,6 +27,12 @@
                       <ul> {% if user.is_authenticated %}
                         <p> Logged in as {{ user.username }}
                           <a href="{% url 'logout' %}">Log out</a>
+                          {% if user.is_doctor %}
+                          <h3 style="text-align: left;"><a href="{% url 'd_home' %}"> Home </a></h3>
+                          {% endif %}
+                          {% if user.is_patient %}
+                          <h3 style="text-align: left;"><a href="{% url 'p_home' %}"> Home </a></h3>
+                          {% endif %}
                         {% else %}
                          <br>
                          SIGN UP  <a href="{% url 'patient_signup' %}" class="btn btn-light" role="button">Patient account</a> | <a href="{% url 'doctor_signup' %}" class="btn btn-light" role="button">Doctor account</a>.<br>
