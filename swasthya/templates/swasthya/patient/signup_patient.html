@@ -1,16 +1,30 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
   <div>
       <h2>Sign up as a {{ user_type }}</h2>
-      <form method="post" novalidate>
-        {% csrf_token %}
-        <input type="hidden" name="next" value="{{ next }}">
-        {{ user_form.as_p }}
-        {{ profile_form.as_p }}
-        <button type="submit" class="btn btn-success">Sign up</button>
-      </form>
-    
-  </div>
+      <div class="container">
+        <div class="row justify-content-center mb-5">
+          <div class="col-md-4"></div>
+          <div class="col-md-4">
+            <form method="post" novalidate>
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{ next }}">
+              {{ user_form|crispy }}
+              {{ profile_form|crispy }}
+              <button type="submit" class="btn btn-success">Sign up</button>
+            </form>
+          </div>
+          <div class="col-md-4"></div>
+        </div>
+      </div>
+      <!-- <div class="row mb-4">
+        <div class="col-md-12"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-12"></div>
+      </div> -->
+    </div>
 {% endblock %}
 

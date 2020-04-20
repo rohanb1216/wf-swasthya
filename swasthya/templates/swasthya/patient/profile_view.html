@@ -1,8 +1,41 @@
-Name:{{ patient.name }} <br/>
-Age:{{ patient.age }} <br/>
-Gender:{{ patient.gender }} <br/>
-Contact:{{ patient.contact }} <br/>
-Email :{{ patient.email }} <br/>
+{%  extends 'base.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <table class="table table-borderless table-hover table-dark" style="border-radius: 7px;">
+            <tr>
+                <td>
+                    Name: {{ patient.name }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Age:{{ patient.age }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Gender:{{ patient.gender }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Contact: {{ patient.contact }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Email :{{ patient.email }}
+                </td>
+            </tr>
+        </table>
+    </div>
+<div class="col-md-3"></div>
+</div>
+
+
 <a href="{% url 'profile_edit_patient' %}"> EDIT </a>
 <br/>
 <a href="{% url 'p_home' %}"> Home </a>
+{% endblock %}

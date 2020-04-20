@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 
 <div>
@@ -8,8 +8,8 @@
     </h2>
     <form method="POST" novalidate>
         {% csrf_token %}
-        {{ form.as_p }}
-        {{ slotForm.as_p }}
+        {{ form|crispy }}
+        {{ slotForm|crispy }}
         <button type="submit" class="btn btn-success">Book</button>
     </form>
 </div>
