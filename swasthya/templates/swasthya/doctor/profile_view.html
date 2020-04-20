@@ -1,10 +1,45 @@
-Name:{{ doctor.name }} <br/>
-Gender:{{ doctor.gender }} <br/>
-Contact:{{ doctor.contact }} <br/>
-Email :{{ doctor.email }} <br/>
-Qualification: {{ doctor.qualification }}
-Specialisation: {{ doctor.specialisation }}
-<br/>
+{%  extends 'base.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <table class="table table-borderless table-hover table-dark" style="border-radius: 7px;">
+            <tr>
+                <td>
+                    Name: {{ doctor.name }} 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Gender:{{ doctor.gender }} 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Contact:{{ doctor.contact }} 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Email :{{ doctor.email }} 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Qualification: {{ doctor.qualification }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Specialisation: {{ doctor.specialisation }}
+                </td>
+            </tr>
+</table>
+    </div>
+<div class="col-md-3"></div>
+</div>
 <a href="{% url 'profile_edit' %}"> EDIT </a>
 <br/>
 <a href="{% url 'd_home' %}"> Home </a>
+
+{% endblock %}
