@@ -1,12 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
 <h1> Details of {{patient.name}} </h1>
-
-Name:{{ patient.name }} <br/>
-Age:{{ patient.age }} <br/>
-Gender:{{ patient.gender }} <br/>
-Contact:{{ patient.contact }} <br/>
-Email :{{ patient.email }} <br/>
-
-<table style="border: solid;" >
+<table cellpadding="0" cellspacing="0" border="0" class="table table-hover">
+    <thead class="thead-dark">
+    
+    </thead>
+<tbody>
+  
+    <tr><td>Name: </td><td>{{ patient.name }}</td></tr>
+    <tr><td>Age: </td><td>{{ patient.age }}</td></tr>
+    <tr><td>Gender: </td><td>{{ patient.gender }}</td></tr>
+    <tr><td>Contact: </td><td>{{ patient.contact }}</td></tr>
+    <tr><td>Email: </td><td>{{ patient.email }}</td></tr>
+  
+  
+</tbody>
+</table>
+<h1> Medical History</h1>
+<table cellpadding="0" cellspacing="0" border="0" class="table table-hover">
+    <thead class="thead-dark">
+    <th>Date Uploaded</th>
+    <th>Details</th>
+    <th>Medical Record</th>
+    </thead>
 {% for r in records %}
 <tr>
     <td>{{ r.date }}</td>
@@ -20,3 +37,5 @@ Email :{{ patient.email }} <br/>
 <h1>
 <a href="{% url 'view_patients' %}"> Back to Patients List </a>
 </h1>
+</div>
+{% endblock %}

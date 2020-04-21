@@ -39,16 +39,6 @@
 
   <h2>Welcome to Swasthya</h2>
  
-  <!-- <header>
-    <div class="wrapper">
-        <img src="{% static "logo4edited.png" %}" height="120px" width="300px" alt="logo">
-        <nav>
-            <ul>
-                <li><a href="app/login.php">Login</a></li>
-            </ul>
-        </nav>
-    </div>
-  </header> -->
   
   <div id="hero-image">
       <div class="wrapper image_title">
@@ -83,7 +73,7 @@
           <div class="clear"></div>
       </ul>
     </div>
-    <a href="app/doctor.php" class="button-1">REGISTER</a>
+    <a href="{% url 'patient_signup' %}" class="button-1">REGISTER</a>
   </div>
   
   <br/><br/>
@@ -112,7 +102,7 @@
           <div class="clear"></div>
       </ul>
   </div>
-  <a href="app\patient.php" class="button-1">REGISTER</a>
+  <a href="{% url 'doctor_signup' %}" class="button-1">REGISTER</a>
   </div>
   </br></br>
   

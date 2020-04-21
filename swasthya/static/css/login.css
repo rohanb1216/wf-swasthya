@@ -3,7 +3,7 @@
 /* Add padding to containers */
 .container {
   padding: 16px;
-  background-color:lightblue;
+  background-color:lightskyblue;
 }
 
 /* Full-width input fields */
@@ -38,8 +38,7 @@ input[type=text]:focus, input[type=password]:focus {
   opacity:1;
 }
 
-/* Add a blue text color to links */
 a {
-  color: white;
+  color:white;
 }
 

@@ -1,10 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
-
+<div class="container h-100">
+<div class="heading">
+    <h1>Choose a range to view Appointments<br> <br></h1>
 <form method=POST>
-	{%csrf_token%} 
-	{{ form }} 
-    <button type="submit"> Search </button>
+<div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+    {%csrf_token%} 
+   From:
+    {{ form.start }}
+    To:
+    {{ form.end }}
+    <button type="submit" class="btn btn-primary"> Search </button>
+ </div>
 </form>
 <script>
     $(function() {
@@ -17,12 +24,27 @@
       });
     });
 </script>
-<table style="border: solid;">
+<br/>
+<br/>
+
+<div class="tbl-header">
+    <table cellpadding="0" cellspacing="0" border="0" class="table table-hover">
+      <thead class="thead-dark">
+        <tr>
+            <th>Date</th>
+            <th>10-10:30</th>
+            <th>10:30-11</th>
+            <th>11-11:30</th>
+            <th>11:30-12</th>
+            <th>13-13:30</th>
+            <th>13:30-14</th>
+            <th>14-14:30</th>
+        </tr>
+      </thead>
+<tbody>
+
     {% for appointment in appointments %}
         <tr>
-            <td>
-                {{ appointment.doctor }}
-            </td>
             <td>
                 {{ appointment.date }}
             </td>
@@ -48,9 +70,11 @@
                 {{ appointment.slot7 }}
             </td>
         </tr>
+    
     {% endfor %}
+</tbody>
 </table>
-<br/>
-<a href="{% url 'd_home' %}"> Home </a>
+</div>
+</div>
 {% endblock %}
 

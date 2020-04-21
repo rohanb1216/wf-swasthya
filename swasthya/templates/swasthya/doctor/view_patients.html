@@ -1,16 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>{{ doctor_name }}</h1>
-<table style="border: solid;">
+<div class="container h-100">
+<h1>List of Patients. Click Name to View details</h1>
 
-    {% for p in patient_set %}
+<div class="tbl-header">
+    <table cellpadding="0" cellspacing="0" border="0" class="table table-hover">
+      <thead class="thead-dark">
         <tr>
-            <td><a href="{% url 'patient_detail' name=p %}">{{p}}</a></td>
-          
-    {% endfor %}
-
+            <th>Patient Name</th>
+            
+        </tr>
+      </thead>
+<tbody>
+    {% for p in patient_set %}
+    <tr>
+        <td><a href="{% url 'patient_detail' name=p %}">{{p}}</a></td>
+    </tr>
+{% endfor %}
+    
+</tbody>
 </table>
-<br/>
-<a href="{% url 'd_home' %}"> Home </a>
+</div>
+</div>
+</div>
 {% endblock %}
 

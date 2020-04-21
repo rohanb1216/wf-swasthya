@@ -1,14 +1,23 @@
 {% extends 'base.html' %}
-
 {% block content %}
-<h1>Patient Home</h1>
-<a href="{% url 'profile_view' %}"> View Profile </a>
-<br/>
-<a href="{% url 'change_password' %}"> Change your password </a>
-<br/>
-<a href="{% url 'view_appointments' %}"> View your appointments </a>
-<br/>
-<a href="{% url 'view_patients' %}"> View your patients </a>
-<br/>
+<div class="container h-100">
+
+
+<h2>Welcome, Dr. {{user.username}}</h2>
+
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+    <table class="table table-borderless table-hover" style="border-radius: 7px;">
+    <tbody>
+        <tr><td><a href="{% url 'profile_view' %}"> View Your Profile </a></td></tr>
+        <tr><td><a href="{% url 'change_password' %}"> Change Your Password </a></td></tr>
+        <tr><td><a href="{% url 'view_appointments' %}"> View Your Appointments </a></td></tr>
+        <tr><td><a href="{% url 'view_patients' %}"> View Your Patients </a></td></tr>
+    </tbody>
+    </table>
+    </div>
+</div>
+</div>
 {% endblock %}
-<br>
+
