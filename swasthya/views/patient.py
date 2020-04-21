@@ -157,7 +157,8 @@ def doctor_list(request):
         return render (request,"swasthya/patient/doctor_list.html",{'form1':form1,'doctors':doctors})  
 
 def doctor_detail(request,name):
-    doctor=  Doctor.objects.get(user=name)
+    id = User.objects.get(username=name)
+    doctor=  Doctor.objects.get(user_id=id)
     return render(request,"swasthya/patient/doctor_detail.html",{"doctor":doctor})
 
 #gives select form but doesn't select
