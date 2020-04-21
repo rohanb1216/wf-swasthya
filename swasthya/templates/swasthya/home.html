@@ -19,7 +19,7 @@
           <div>
             <header>
               <div class="wrapper">
-                  <img src="{% static "images/logo4edited.png" %}" height="120px" width="300px" alt="logo">
+                  <img src="{% static "images/logo4edited.png" %}" height="100px" width="300px" alt="logo">
                   <nav>
                       <ul> {% if user.is_authenticated %}
                         <p> Logged in as {{ user.username }}
@@ -95,9 +95,9 @@
               <h4>Daily Activity</h4>
               <p>A seamless experience that notifies you about your daily commitments at appropriate times so that you remain organized and get more done.</p>
           </li>
-          <li class="feature-3">
-              <h4>Progress Tracking</h4>
-              <p> All food and exercise patterns are followed closely to guide you to better health every day.</p>
+          <li class="doc-feature-1" >
+              <h4>Medical History</h4>
+              <p> All your medical records in one place, visible to you and your doctors.</p>
           </li>
           <div class="clear"></div>
       </ul>
@@ -108,7 +108,7 @@
   
   
   
-  <div id="secondary-content">
+  <!-- <div id="secondary-content">
       <div class="wrapper">
           <article style="background-image: url('{% static "images/calender.png" %}'); height : 270px; width : 460px;">
               <div class="overlay">
@@ -126,18 +126,17 @@
   
           <div class="clear"></div>
       </div>
-  </div>
+  </div> -->
   
   <div id="secondary-content">
       <div class="wrapper">
-          <article style="background-image: url('{% static "images/treadmill.png" %}');">
-              <div class="overlay">
-                  <h4>Exercise Tracking</h4>
-                  <p><small>Allows user to choose type of exercise regime adopted, and a stop watch to monitor duration of exercise. All data stored
-  date-wise.</small></p>
-              </div>
-          </article>
-          <article style = "background-image: url('{% static "images/doc.png" %}');">
+        <article style="background-image: url('{% static "images/reports.png" %}'); height : 270px; width : 460px;">
+            <div class="overlay">
+                <h4>Tracking</h4>
+                <p><small>Tracking and maintenance of patient medical records.</small></p>
+            </div>
+        </article>
+          <article style ="background-image: url('{% static "images/doc.png" %}');">
               <div class="overlay">
                   <h4>Appointments</h4>
                   <p><small>A clear list of upcoming appointments which can be modified according to one's convinience.</small></p>
