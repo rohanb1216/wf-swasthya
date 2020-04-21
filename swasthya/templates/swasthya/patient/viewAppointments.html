@@ -1,19 +1,56 @@
 {% extends 'base.html' %}
 {% block content %}
-<table style="border: solid;">
+<div class="container h-100">
+<div class="tbl-header">
+    <table cellpadding="0" cellspacing="0" border="0" class="table table-hover">
+      <thead class="thead-dark">
+        <tr>
+            <th>Date</th>
+            <th>10-10:30</th>
+            <th>10:30-11</th>
+            <th>11-11:30</th>
+            <th>11:30-12</th>
+            <th>13-13:30</th>
+            <th>13:30-14</th>
+            <th>14-14:30</th>
+        </tr>
+      </thead>
+<tbody>
+
     {% for appointment in appointments %}
         <tr>
             <td>
-                {{ appointment.doctor }}
-            </td>
-            <td>
                 {{ appointment.date }}
             </td>
-            
+            <td>
+                {{ appointment.slot1 }}
+            </td>
+            <td>
+                {{ appointment.slot2 }}
+            </td>
+            <td>
+                {{ appointment.slot3 }}
+            </td>
+            <td>
+                {{ appointment.slot4 }}
+            </td>
+            <td>
+                {{ appointment.slot5 }}
+            </td>
+            <td>
+                {{ appointment.slot6 }}
+            </td>
+            <td>
+                {{ appointment.slot7 }}
+            </td>
         </tr>
+    
     {% endfor %}
+</tbody>
 </table>
-<br/>
-<a href="{% url 'p_home' %}"> Home </a>
+</div>
+<!-- <a href="{% url 'p_home' %}"> Home </a>   -->
+</div>
+
 {% endblock %}
 

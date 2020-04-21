@@ -4,6 +4,7 @@
 .container {
   padding: 16px;
   background-color:lightskyblue;
+  border-radius: 6px;
 }
 
 /* Full-width input fields */

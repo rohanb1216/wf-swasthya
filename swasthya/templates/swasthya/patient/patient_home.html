@@ -1,18 +1,25 @@
 {% extends 'base.html' %}
-
 {% block content %}
-<h1>Patient Home</h1>
-<a href="{% url 'profile_view_patient' %}"> View Profile </a>
-<br/>
-<a href="{% url 'doctor_list' %}"> View List of doctors </a>
-<br/>
-<a href="{% url 'book' %}"> Book an appointment </a>
-<br/>
-<a href="{% url 'view' %}"> View appointments </a>
-<br/>
-<a href="{% url 'change_password_patient' %}"> Change your password </a>
-<br/>
-<a href="{% url 'view_medical_records' %}"> View your medical records </a>
-<br/>
+<div class="container h-100">
+
+
+<h2>Welcome, {{user.username}}</h2>
+
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+    <table class="table table-borderless table-hover" style="border-radius: 7px;">
+    <tbody>
+        <tr><td><a href="{% url 'profile_view_patient' %}"> View Your Profile </a></td></tr>
+        <tr><td><a href="{% url 'doctor_list' %}"> Search for a Doctor </a></td></tr>
+        <tr><td><a href="{% url 'book' %}"> Book an Appointment </a></td></tr>
+        <tr><td><a href="{% url 'view' %}"> View Your Appointments </a></td></tr>
+        <tr><td><a href="{% url 'view_medical_records' %}"> View Your Medical Records </a></td></tr>
+        <tr><td><a href="{% url 'change_password_patient' %}"> Change Your Password </a></td></tr>
+    </tbody>
+    </table>
+    </div>
+</div>
+</div>
 {% endblock %}
-<br>
+
