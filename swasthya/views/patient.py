@@ -35,8 +35,8 @@ def patient_signup(request):
     if request.method == 'POST':
         user_form = PatientSignUpForm(request.POST, prefix='UF')
         profile_form = PatientDetailsForm(request.POST, prefix='PF')
-        print(user_form.errors.as_data())
-        print(profile_form.errors.as_data())
+        # print(user_form.errors.as_data())
+        # print(profile_form.errors.as_data())
         if user_form.is_valid() and profile_form.is_valid():
             user=user_form.save(commit=False)
             user.is_patient = True
@@ -60,8 +60,8 @@ def patient_signup(request):
             })
 
     else:
-        user_form = PatientSignUpForm(request.POST, prefix='UF')
-        profile_form = PatientDetailsForm(request.POST, prefix='PF')
+        user_form = PatientSignUpForm(prefix='UF')
+        profile_form = PatientDetailsForm( prefix='PF')
         return render(request, 'swasthya/patient/signup_patient.html',{
             'user_form': user_form,
             'profile_form': profile_form,
@@ -101,8 +101,8 @@ def bookAppointment(request):
             return redirect("p_home")
             
     else:
-        bookingForm = BookingFormInit(request.POST, initial={'date': datetime.date.today})
-        slotForm = BookingFormFinal(request.POST)
+        bookingForm = BookingFormInit(initial={'date': datetime.date.today})
+        slotForm = BookingFormFinal()
         return render(request, "swasthya/patient/book.html", {'form':bookingForm, 'slotForm':slotForm})
 
 def ExistingSlots(request):
