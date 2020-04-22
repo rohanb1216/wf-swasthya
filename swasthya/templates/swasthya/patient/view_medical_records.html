@@ -1,7 +1,12 @@
 {% extends 'base.html' %} {% block content %}
 <div class="container">
-  <h1>
+  
       <table class="table table-borderless table-hover">
+        <thead class="thead-dark">
+          <th>Date Uploaded</th>
+          <th>Details</th>
+          <th>Medical Record</th>
+          </thead>
           {% for r in records %}
           <tr>
               <td>{{ r.date }}</td>
@@ -11,11 +16,11 @@
             {% endfor %}
         </table>
         <br />
-        <a href="{% url 'add_medical_record' %}"
-          ><button class="btn btn-primary">Add a medical record</button>
+        <a href="{% url 'add_medical_record' %}">
+        <button class="btn btn-primary" id='btn'>Add a medical record</button>
         </a>
         <br />
-      </h1>
+      
 </div>
-<!-- <a href="{% url 'p_home' %}"> Home </a>   -->
+
 {% endblock %}
