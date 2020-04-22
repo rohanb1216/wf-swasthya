@@ -40,33 +40,33 @@
 
     <div id="page-container">
       <div id="content-wrap">
-        {% if user.is_authenticated %}
-        <p style="text-align: right;"> Logged in as {{ user.username }}
-        </p>
-        {% endif %}
-              <nav class="navbar navbar-expand-md ">
-             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-                  <ul class="navbar-nav mr-auto">
-                  <li><img src="{% static "images/logo4edited.png" %}" height="100px" width="300px" alt="logo"></li>
-                  <li>
-                    {% if user.is_doctor %}
-                      <h3 style="text-align: left;"><a href="{% url 'd_home' %}"> 
-                      <button class="btn btn-primary" id='btn'>Home</button> </a></h3>
-                      {% endif %}
-                      {% if user.is_patient %}
-                      <h3 style="text-align: left;"><a href="{% url 'p_home' %}">
-                      <button class="btn btn-primary" id='btn'>Home</button></a></h3>
-                      {% endif %}
+        <nav class="navbar navbar-expand-md ">
+          <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+              <li><img src="{% static "images/logo4edited.png" %}" height="100px" width="300px" alt="logo"></li>
+              <li>
+                {% if user.is_authenticated %}
+                <p style="text-align: right;"><span class="badge badge-info">Logged in as {{ user.username }}</span>
+                </p>
+                {% endif %}
+                {% if user.is_doctor %}
+                <h3 style="text-align: left;"><a href="{% url 'd_home' %}"> 
+                  <button class="btn btn-primary" id='btn'>Home</button> </a></h3>
+                  {% endif %}
+                  {% if user.is_patient %}
+                  <h3 style="text-align: left;"><a href="{% url 'p_home' %}">
+                    <button class="btn btn-primary" id='btn'>Home</button></a></h3>
+                    {% endif %}
                   </li>
                   <li>  
                     {% if user.is_authenticated %}
-                
+                    
                     {% else %}
-                     <br>
-                     SIGN UP  <a href="{% url 'patient_signup' %}" class="btn btn-light" role="button">Patient account</a> | <a href="{% url 'doctor_signup' %}" class="btn btn-light" role="button">Doctor account</a><br>
+                    <br>
+                    SIGN UP  <a href="{% url 'patient_signup' %}" class="btn btn-light" role="button">Patient account</a> | <a href="{% url 'doctor_signup' %}" class="btn btn-light" role="button">Doctor account</a><br>
                     {% endif %}
                   </li>
-                   <li></li>
+                  <li></li>
                   
                   <li>
                    
