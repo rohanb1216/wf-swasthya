@@ -241,7 +241,7 @@ def add_medical_record(request):
         else:
             return render(request, "swasthya/patient/add_medical_record.html", {'form':form, 'user':user})
     else:
-        form = MedicalRecordUploadForm(request.POST)
+        form = MedicalRecordUploadForm()
         return render(request, "swasthya/patient/add_medical_record.html", {'form':form, 'user':user})
 
 def view_medical_records(request):
