@@ -27,6 +27,7 @@ class PatientSignUpView(CreateView):
         login(self.request, user)
         return redirect('p_home')
 
+@login_required(login_url='accounts/login')
 def p_home(request):
     patient_profile = Patient.objects.get(user=request.user)
     return render(request, 'swasthya/patient/patient_home.html', {'patient_profile': patient_profile})
@@ -66,7 +67,7 @@ def patient_signup(request):
             'user_form': user_form,
             'profile_form': profile_form,
         })
-
+@login_required(login_url='accounts/login')
 def bookAppointment(request):
     slots = [True, True, True, True, True, True, True]
     print(type(request.user.username))
@@ -137,13 +138,14 @@ def ExistingSlots(request):
         print('else')
         return JsonResponse(slots, safe = False)
 
-
+@login_required(login_url='accounts/login')
 def ViewAppointment(request):
     appointments = Appointment.objects.raw('SELECT id, doctor_id, date, slot1, slot2, slot3, slot4, slot5, slot6, slot7 FROM swasthya_appointment WHERE %s IN(slot1, slot2, slot3, slot4, slot5, slot6, slot7);', [request.user.username])
     return render(request, "swasthya/patient/viewAppointments.html", {'appointments':appointments})
 
 
 #works, but not a select menu
+@login_required(login_url='accounts/login')
 def doctor_list(request):
     doctors=Doctor.objects.all()    
     if(request.method=="POST"):
@@ -154,48 +156,13 @@ def doctor_list(request):
     else:
         form1=SearchForm()
         return render (request,"swasthya/patient/doctor_list.html",{'form1':form1,'doctors':doctors})  
-
+@login_required(login_url='accounts/login')
 def doctor_detail(request,name):
     id = User.objects.get(username=name)
     doctor=  Doctor.objects.get(user_id=id)
     return render(request,"swasthya/patient/doctor_detail.html",{"doctor":doctor})
 
-#gives select form but doesn't select
-def doctor_list_form(request):
-    doctors=Doctor.objects.all()    
-    if(request.method=="POST"):
-        form1=SearchForm2(request.POST)
-        if(form1.is_valid()):
-            doctors=Doctor.objects.all().filter(Q(specialisation=request.POST.get('specialisation','')) & Q(location=request.POST.get('location','')))
-            return render(request,"swasthya/patient/doctor_list.html",{'form1':form1,'doctors':doctors})
-        else:
-            form1=SearchForm2()
-            return render (request,"swasthya/patient/doctor_list.html",{'form1':form1})
-    else:
-            form1=SearchForm2()
-            return render (request,"swasthya/patient/doctor_list.html",{'form1':form1,'doctors':doctors})   
-
-#tried another method but that didn't work either
-class DoctorListView(View):
-    model = Doctor
-    form_class = SearchForm2
-    template_name = 'swasthya/patient/doctor_list.html'
-
-    def get(self, request, *args, **kwargs):
-        form1 = SearchForm2()
-        context ={'form1': form1}
-        return render(request,'swasthya/patient/doctor_list.html',context)
-    
-    def post(self, request, *args, **kwargs):
-        form1 = SearchForm2(data=request.POST)
-        specialisation = request.POST.get('specialisation')
-        form1.fields['specialisation'].choices = [(specialisation, specialisation)]
-        if form1.is_valid():
-            doctors=Doctor.objects.all().filter(Q(specialisation=request.POST.get('specialisation','')) & Q(location=request.POST.get('location','')))
-            form1 = SearchForm2()
-            return render(request, 'swasthya/patient/doctor_list.html', {'form1': form1,'doctors':doctors})
-        return render(request, 'swasthya/patient/doctor_list.html', {'form1': form1})
-
+@login_required(login_url='accounts/login')
 def change_password_patient(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
@@ -211,7 +178,7 @@ def change_password_patient(request):
     return render(request, 'swasthya/patient/change_password.html', {
         'form': form
     })
-
+@login_required(login_url='accounts/login')
 def profile_edit_patient(request):
         user = Patient.objects.get(user=request.user)
         #quotes=quote.objects.get(pk=pk)
@@ -223,7 +190,8 @@ def profile_edit_patient(request):
                 return(redirect("profile_view_patient"))
         else:
             form=PatientDetailsForm(instance=user)
-            return render (request,'swasthya/patient/profile_edit.html',{'form':form})  
+            return render (request,'swasthya/patient/profile_edit.html',{'form':form})
+@login_required(login_url='accounts/login')           
 def profile_view_patient(request):
         patient = Patient.objects.get(user=request.user)
         return render (request,'swasthya/patient/profile_view.html',{'patient':patient})
@@ -242,7 +210,7 @@ def add_medical_record(request):
     else:
         form = MedicalRecordUploadForm()
         return render(request, "swasthya/patient/add_medical_record.html", {'form':form, 'user':user})
-
+@login_required(login_url='accounts/login')
 def view_medical_records(request):
     patient = Patient.objects.get(user=request.user)
     records=MedicalRecords.objects.filter(patient=patient)

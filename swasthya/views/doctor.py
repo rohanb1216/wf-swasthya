@@ -21,7 +21,7 @@ class DoctorSignUpView(CreateView):
         user = form.save()
         login(self.request, user)
         return redirect('d_home')
-
+@login_required(login_url='accounts/login')
 def d_home(request):
     return render(request, 'swasthya/doctor/doctor_home.html')
 
@@ -59,7 +59,7 @@ def doctor_signup(request):
 			'user_form': user_form,
 			'doctor_profile': doctor_profile,
 		})
-
+@login_required(login_url='accounts/login')
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
@@ -75,7 +75,7 @@ def change_password(request):
     return render(request, 'swasthya/doctor/change_password.html', {
         'form': form
     })
-
+@login_required(login_url='accounts/login')
 def profile_edit(request):
         user = Doctor.objects.get(user=request.user)
         if(request.method=="POST"):
@@ -86,11 +86,12 @@ def profile_edit(request):
                 return(redirect("profile_view"))
         else:
             form=DoctorDetailsForm(instance=user)
-            return render (request,'swasthya/doctor/profile_edit.html',{'form':form})  
+            return render (request,'swasthya/doctor/profile_edit.html',{'form':form}) 
+@login_required(login_url='accounts/login')
 def profile_view(request):
         doctor = Doctor.objects.get(user=request.user)
         return render (request,'swasthya/doctor/profile_view.html',{'doctor':doctor})
-
+@login_required(login_url='accounts/login')
 def view_patients(request):
     doctor = Doctor.objects.get(user=request.user)
     doctor_name=doctor.user_id
@@ -114,13 +115,13 @@ def view_patients(request):
             patient_list.append(i.slot7)
     patient_set=list(set(patient_list))
     return render(request, "swasthya/doctor/view_patients.html", {'patients':patients,'patient_set':patient_set,'doctor_name':doctor_name})
-
+@login_required(login_url='accounts/login')
 def patient_detail(request,name):
     ID= User.objects.get(username=name)
     patient=  Patient.objects.get(user_id=ID)
     records= MedicalRecords.objects.filter(patient=patient)
     return render(request,"swasthya/doctor/patient_detail.html",{"patient":patient,"records":records})
-
+@login_required(login_url='accounts/login')
 def view_appointments(request):
     doctor = Doctor.objects.get(user=request.user)
     appointments = Appointment.objects.filter(doctor = doctor)
