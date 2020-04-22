@@ -1,12 +1,42 @@
 {% extends 'base.html' %}
 {% block content %}
+
+<div class="jumbotron">
+    <div class="container">
+      <h1 class="display-3">Welcome, {{user.username}}!</h1>
+      <p>This is your home page!</p>
+      <p><a class="btn btn-primary btn-lg" href="{% url 'view' %}" role="button">View Your Appointments &raquo;</a></p>
+    </div>
+  </div>
 <div class="container h-100">
-
-
-<h2>Welcome, {{user.username}}</h2>
-
 <div class="row">
-    <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <h2>Doctor Search</h2>
+          <p align="center"> Search for doctors based on specialisation and location. </p>
+          <p align='center'><a class="btn btn-secondary" href="{% url 'doctor_list' %}" role="button">View details &raquo;</a></p>
+    </div>
+    <div class="col-md-6">
+        <h2>Book an Appointment</h2>
+        <p align="center"> Book an Appointment with the doctor of your choice based on available slots. </p>
+        <p align='center'><a class="btn btn-secondary" href="{% url 'book' %}" role="button">View details &raquo;</a></p>
+    </div>
+    
+</div>
+<div class="row">
+    <div class="col-md-6">
+      <h2>Medical History</h2>
+      <p align="center"> View and Add your medical records to access them anywhere. </p>
+      <p align='center'><a class="btn btn-secondary" href="{% url 'view_medical_records' %}" role="button">View details &raquo;</a></p>
+</div>
+<div class="col-md-6">
+    <h2>View Your Profile</h2>
+    <p align="center"> Profile details, view and edit! </p>
+    <p align='center'><a class="btn btn-secondary" href="{% url 'profile_view_patient' %}" role="button">View details &raquo;</a></p>
+</div>
+
+</div>
+<div class="row">
+    <!-- <div class="col-md-3"></div>
     <div class="col-md-6">
     <table class="table table-borderless table-hover" style="border-radius: 7px;">
     <tbody>
@@ -18,7 +48,7 @@
         <tr><td><a href="{% url 'change_password_patient' %}"> Change Your Password </a></td></tr>
     </tbody>
     </table>
-    </div>
+    </div> -->
 </div>
 </div>
 {% endblock %}
