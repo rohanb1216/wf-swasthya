@@ -96,9 +96,8 @@ def bookAppointment(request):
             elif slot == 'slot7':
                 appointment.slot6 = request.user.username
             appointment.save()
-            
-            
-            return redirect("p_home")
+            no_record_check=0
+            return render(request, "swasthya/patient/patient_home.html",{'no_record_check':no_record_check})
             
     else:
         bookingForm = BookingFormInit(initial={'date': datetime.date.today})
