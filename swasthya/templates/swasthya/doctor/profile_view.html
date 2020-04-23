@@ -1,27 +1,56 @@
-{%  extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
-
-<div class="row">
+<div class="container">
+  <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-6">
-        <table class="table table-borderless table-hover table-dark" style="border-radius: 7px;">
-            <tbody>
-  
-                <tr><td>Name: </td><td>{{ doctor.name }}</td></tr>
-                <tr><td>Gender: </td><td>{{ doctor.gender }}</td></tr>
-                <tr><td>Contact: </td><td>{{ doctor.contact }}</td></tr>
-                <tr><td>Email: </td><td>{{ doctor.email }}</td></tr>
-                <tr><td>Qualification: </td><td>{{ doctor.qualification }}</td></tr>
-                <tr><td>Specialisation: </td><td>{{ doctor.specialisation }}</td></tr>
-                <tr><td>Location: </td><td>{{ doctor.location }}</td></tr>
-              
-            </tbody>
-           
-</table>
+      <table
+        class="table table-borderless table-hover table-dark"
+        style="border-radius: 7px;"
+      >
+        <tbody>
+          <tr>
+            <td>Name:</td>
+            <td>{{ doctor.name }}</td>
+          </tr>
+          <tr>
+            <td>Gender:</td>
+            <td>{{ doctor.gender }}</td>
+          </tr>
+          <tr>
+            <td>Contact:</td>
+            <td>{{ doctor.contact }}</td>
+          </tr>
+          <tr>
+            <td>Email:</td>
+            <td>{{ doctor.email }}</td>
+          </tr>
+          <tr>
+            <td>Qualification:</td>
+            <td>{{ doctor.qualification }}</td>
+          </tr>
+          <tr>
+            <td>Specialisation:</td>
+            <td>{{ doctor.specialisation }}</td>
+          </tr>
+          <tr>
+            <td>Location:</td>
+            <td>{{ doctor.location }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-<div class="col-md-3"><a href="{% url 'profile_edit' %}"><button type="submit" class="btn btn-primary"> EDIT  </button> </a></div>
-
+    <div class="col-md-3">
+      <a href="{% url 'profile_edit' %}"
+        ><button type="submit" class="btn btn-primary">EDIT</button>
+      </a>
+      <br />
+      <a href="{% url 'change_password' %}"
+        ><button class="btn btn-info my-2 my-sm-0">
+          Change your Password
+        </button>
+      </a>
+    </div>
+  </div>
 </div>
-
-{% endblock %}
+  {% endblock %}
